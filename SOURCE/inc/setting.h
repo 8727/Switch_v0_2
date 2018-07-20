@@ -1,11 +1,13 @@
-#ifndef __MAIN_H
-#define __MAIN_H
+#ifndef _SETTING_H
+#define _SETTING_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
-#include "setting.h"
 #include "rtc.h"
+
 
 /* Includes ------------------------------------------------------------------*/
 
-#endif /* __MAIN_H */
+void setting(void);
+
+#endif /* _SETTING_H */

@@ -411,6 +411,16 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\main.c</FilePath>
             </File>
+            <File>
+              <FileName>setting.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\setting.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\rtc.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
