@@ -1,15 +1,12 @@
 #include "main.h"
 
 int main (void){
- 
- setting();
- //rtcSetCounter(1532082091);
-
-
+  
+  setting();
+  
   while(1){
-
-
-
+  
+  
+  
   }
-
 }
