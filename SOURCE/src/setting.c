@@ -22,26 +22,11 @@ void setting(void){
   RCC->APB2ENR |= RCC_APB2ENR_IOPGEN;
   
   rtcInit();
+  lcdInitt();
+  brighetLcdInit();
   
   
   
   
-  
-  
-  GPIOA->CRH |= GPIO_CRH_MODE15;
-  GPIOA->CRH &= ~(GPIO_CRH_CNF15);
-  GPIOA->CRH |= GPIO_CRH_CNF15_1;
-  
-  RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-  TIM2->PSC = 0x0FFF;
-  TIM2->ARR = 0xFF;
-  TIM2->CCR1 = 0x01;  // Brighet LCD
-  TIM2->CCER |= TIM_CCER_CC1E;
-  TIM2->CCMR1 |= TIM_CCMR1_OC1M_2;
-  TIM2->CCMR1 |= TIM_CCMR1_OC1M_1;
-  TIM2->CCMR1 |= TIM_CCMR1_OC1PE;
-  TIM2->CR1 &= ~TIM_CR1_DIR;
-  TIM2->CR1 &= ~TIM_CR1_CMS;
-  TIM2->CR1 |= TIM_CR1_ARPE;
-  TIM2->CR1 |= TIM_CR1_CEN; // Timer Brighet
+
 }

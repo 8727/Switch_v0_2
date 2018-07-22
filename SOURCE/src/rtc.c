@@ -1,5 +1,28 @@
 #include "rtc.h"
 
+void RTC_IRQHandler (void)
+{
+  if(RTC->CRL & RTC_CRL_SECF)
+  {
+    RTC->CRL &= ~RTC_CRL_SECF;
+//    gui_mode.time_wait++;
+//    if(0xC8 < gui_mode.time_wait) gui_mode.time_wait = 0xC8; // 200 sec
+//    if(gui_mode.wait < gui_mode.time_wait) Gui_Modes();
+  }
+//  if(RTC->CRL & RTC_CRL_ALRF)
+//  {
+//    RTC->CRL &= ~RTC_CRL_ALRF;
+//    
+//    
+//  }
+//  if(RTC->CRL & RTC_CRL_OWF)
+//  {
+//    RTC->CRL &= ~RTC_CRL_OWF;
+//    
+//    
+//  }
+}
+ 
 void rtcInit(void){
   if ((RCC->BDCR & RCC_BDCR_RTCEN) != RCC_BDCR_RTCEN){
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
@@ -21,6 +44,10 @@ void rtcInit(void){
     while((RTC->CRL & RTC_CRL_RSF) != RTC_CRL_RSF){}
     PWR->CR &= ~PWR_CR_DBP;
   }
+  RTC->CRH |= RTC_CRH_SECIE;
+  RTC->CRH |= RTC_CRH_ALRIE;
+  RTC->CRH |= RTC_CRH_OWIE;
+  NVIC_EnableIRQ (RTC_IRQn);
 }
  
 uint32_t rtcGetCounter(void){

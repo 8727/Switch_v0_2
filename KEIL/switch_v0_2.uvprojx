@@ -421,6 +421,11 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\rtc.c</FilePath>
             </File>
+            <File>
+              <FileName>ili9488.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\ili9488.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
