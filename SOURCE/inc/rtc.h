@@ -5,10 +5,10 @@
 #include "stm32f10x.h"
 
 
-/* Includes ------------------------------------------------------------------*/
+/* Define --------------------------------------------------------------------*/
 
-void rtcInit(void);
-uint32_t rtcGetCounter(void);
-void rtcSetCounter(uint32_t count);
+void RtcInit(void);
+uint32_t RtcGetCounter(void);
+void RtcSetCounter(uint32_t count);
 
 #endif /* _RTC_H */

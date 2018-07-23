@@ -23,7 +23,7 @@ void RTC_IRQHandler (void)
 //  }
 }
  
-void rtcInit(void){
+void RtcInit(void){
   if ((RCC->BDCR & RCC_BDCR_RTCEN) != RCC_BDCR_RTCEN){
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
     RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
@@ -50,11 +50,11 @@ void rtcInit(void){
   NVIC_EnableIRQ (RTC_IRQn);
 }
  
-uint32_t rtcGetCounter(void){
+uint32_t RtcGetCounter(void){
   return (uint32_t)((RTC->CNTH << 16) | RTC->CNTL);
 }
  
-void rtcSetCounter(uint32_t count){
+void RtcSetCounter(uint32_t count){
   RCC->APB1ENR |= RCC_APB1ENR_PWREN;
   RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
   PWR->CR |= PWR_CR_DBP;

@@ -5,10 +5,13 @@
 #include "stm32f10x.h"
 #include "rtc.h"
 #include "ili9488.h"
+#include "xpt2046.h"
+
+#include "w25qxx.h"
 
 
-/* Includes ------------------------------------------------------------------*/
+/* Define --------------------------------------------------------------------*/
 
-void setting(void);
+void Setting(void);
 
 #endif /* _SETTING_H */

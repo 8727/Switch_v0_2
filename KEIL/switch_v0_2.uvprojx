@@ -426,6 +426,16 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\ili9488.c</FilePath>
             </File>
+            <File>
+              <FileName>xpt2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\xpt2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\w25qxx.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

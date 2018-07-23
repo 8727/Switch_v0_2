@@ -5,8 +5,7 @@
 #include "stm32f10x.h"
 
 
-/* Includes ------------------------------------------------------------------*/
-
+/* Define --------------------------------------------------------------------*/
 #define ILI9488_RESET_LOW         GPIOD->BRR = GPIO_BRR_BR3
 #define ILI9488_RESET_HIGHT       GPIOD->BSRR = GPIO_BSRR_BS3
 
@@ -34,8 +33,9 @@
 #define GREENYELLOW   0xAFE5      /* 173, 255,  47 */
 
 
-void lcdInitt(void);
-void brighetLcdInit(void);
+void LcdInitt(void);
+void LcdSetWindows(uint16_t xstart, uint16_t ystart, uint16_t xend, uint16_t yend);
+void BrighetLcdInit(void);
 
 
 

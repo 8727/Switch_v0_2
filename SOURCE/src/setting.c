@@ -5,7 +5,7 @@ void SysTick_Handler(void){
   
 }
 
-void setting(void){
+void Setting(void){
   
   SysTick_Config(SystemCoreClock / 1000); //1ms
   
@@ -21,9 +21,12 @@ void setting(void){
   RCC->APB2ENR |= RCC_APB2ENR_IOPFEN;
   RCC->APB2ENR |= RCC_APB2ENR_IOPGEN;
   
-  rtcInit();
-  lcdInitt();
-  brighetLcdInit();
+  RtcInit();
+  BrighetLcdInit();
+  LcdInitt();
+  Xpt2046Init();
+  
+  W25QxxInit();
   
   
   
