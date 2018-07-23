@@ -1,25 +1,25 @@
 #include "ili9488.h"
 
 void LcdSendCommand(uint16_t reg){
-  *(uint16_t *) (LCD_REG) = reg; 
+  LCD_REG = reg; 
 }
 
 void LcdSendData(uint16_t data){
-  *(uint16_t *) (LCD_DATA) = data;
+  LCD_DATA = data;
 }
 
-void LcdSetWindows(uint16_t xstart, uint16_t ystart, uint16_t xend, uint16_t yend){
-  LcdSendCommand(0x2a); 
-  LcdSendData(xstart>>8);
-  LcdSendData(xstart);
-  LcdSendData(xend>>8);
-  LcdSendData(xend);
-  LcdSendCommand(0x2b); 
-  LcdSendData(ystart>>8);
-  LcdSendData(ystart);
-  LcdSendData(yend>>8);
-  LcdSendData(yend);
-  LcdSendCommand(0x2c); 
+void LcdSetWindows(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end){
+  LcdSendCommand(0x2A); 
+  LcdSendData(x_start >> 8);
+  LcdSendData(x_start);
+  LcdSendData(x_end >> 8);
+  LcdSendData(x_end);
+  LcdSendCommand(0x2B); 
+  LcdSendData(y_start >> 8);
+  LcdSendData(y_start);
+  LcdSendData(y_end >> 8);
+  LcdSendData(y_end);
+  LcdSendCommand(0x2C); 
 }
 
 void LcdDelay (uint32_t timedelay){
@@ -27,7 +27,6 @@ void LcdDelay (uint32_t timedelay){
 }
  
 void LcdInitt(void){
-  
   GPIOD->CRL |= GPIO_CRL_MODE3;
   GPIOD->CRL &= ~(GPIO_CRL_CNF3);
   
@@ -110,10 +109,10 @@ void LcdInitt(void){
   LcdSendData(0x06);
   LcdSendCommand(0x36);
 //  LcdSendData(0x48);   //Dspl_Rotation_0_degr
-//  LcdSendData(0x38);   //Dspl_Rotation_90_degr
+  LcdSendData(0x38);   //Dspl_Rotation_90_degr
 //  LcdSendData(0x88);   //Dspl_Rotation_180_degr
-  LcdSendData(0xE8);   //Dspl_Rotation_270_degr
-  LcdSendCommand(0x3a);
+//  LcdSendData(0xE8);   //Dspl_Rotation_270_degr
+  LcdSendCommand(0x3A);
   LcdSendData(0x55);
   LcdSendCommand(0xE9);
   LcdSendData(0x00);
@@ -126,15 +125,34 @@ void LcdInitt(void){
   LcdDelay (9600000);      //120ms
   LcdSendCommand(0x29);
   
-  LcdSetWindows(0x0000, 0x0000, 0x01E0, 0x0140);
-  uint32_t i = 0x00025800;
+  LcdSetWindows(0x0000, 0x0000, 0x01E0, 0x0040);
+  uint16_t i = 0x7800;
+  while(i--){
+    LcdSendData(WHITE);
+  }
+  LcdSetWindows(0x0000, 0x0041, 0x01E0, 0x0080);
+  i = 0x7800;
   while(i--){
     LcdSendData(RED);
+  }
+  LcdSetWindows(0x0000, 0x0081, 0x01E0, 0x00C0);
+  i = 0x7800;
+  while(i--){
+    LcdSendData(GREEN);
+  }
+  LcdSetWindows(0x0000, 0x00C1, 0x01E0, 0x0100);
+  i = 0x7800;
+  while(i--){
+    LcdSendData(BLUE);
+  }
+  LcdSetWindows(0x0000, 0x0101, 0x01E0, 0x0140);
+  i = 0x7800;
+  while(i--){
+    LcdSendData(BLACK);
   }
 }
 
 void BrighetLcdInit(void){
-  
   GPIOA->CRH |= GPIO_CRH_MODE15;
   GPIOA->CRH &= ~(GPIO_CRH_CNF15);
   GPIOA->CRH |= GPIO_CRH_CNF15_1;
@@ -142,7 +160,7 @@ void BrighetLcdInit(void){
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
   TIM2->PSC = 0x0FFF;
   TIM2->ARR = 0xFF;
-  TIM2->CCR1 = 0x01;  // Brighet LCD
+  TIM2->CCR1 = 0xFF;  // Brighet LCD
   TIM2->CCER |= TIM_CCER_CC1E;
   TIM2->CCMR1 |= TIM_CCMR1_OC1M_2;
   TIM2->CCMR1 |= TIM_CCMR1_OC1M_1;

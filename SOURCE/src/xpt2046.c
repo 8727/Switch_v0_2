@@ -1,7 +1,6 @@
 #include "xpt2046.h"
 
-void Xpt2046ReadAdc(uint8_t a, uint8_t b, uint16_t *data_a,  uint16_t *data_b)
-{
+void Xpt2046ReadAdc(uint8_t a, uint8_t b, uint16_t *data_a,  uint16_t *data_b){
   XPT2046_CS_LOW;
   while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = a;
@@ -33,7 +32,6 @@ void Xpt2046ReadAdc(uint8_t a, uint8_t b, uint16_t *data_a,  uint16_t *data_b)
 }
 
 void Xpt2046Init(void){
-  
   GPIOB->CRH &= ~(GPIO_CRH_CNF11 | GPIO_CRH_CNF12 | GPIO_CRH_CNF13 | GPIO_CRH_CNF15);  
   GPIOB->CRH |= GPIO_CRH_CNF11_1 | GPIO_CRH_CNF13_1 | GPIO_CRH_CNF15_1;   
   GPIOB->CRH |= GPIO_CRH_MODE12 | GPIO_CRH_MODE13 | GPIO_CRH_MODE15;  //GPIO SPI XPT2046

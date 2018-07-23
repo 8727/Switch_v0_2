@@ -9,8 +9,8 @@
 #define ILI9488_RESET_LOW         GPIOD->BRR = GPIO_BRR_BR3
 #define ILI9488_RESET_HIGHT       GPIOD->BSRR = GPIO_BSRR_BS3
 
-#define LCD_DATA                  0x60020000
-#define LCD_REG                   0x60000000
+#define LCD_DATA                  *(uint16_t *) (0x60020000)
+#define LCD_REG                   *(uint16_t *) (0x60000000)
 
 
 #define BLACK         0x0000      /*   0,   0,   0 */
@@ -33,16 +33,9 @@
 #define GREENYELLOW   0xAFE5      /* 173, 255,  47 */
 
 
+
+void LcdSetWindows(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 void LcdInitt(void);
-void LcdSetWindows(uint16_t xstart, uint16_t ystart, uint16_t xend, uint16_t yend);
 void BrighetLcdInit(void);
-
-
-
-
-
-
-
-
 
 #endif /* _ILI9488_H */

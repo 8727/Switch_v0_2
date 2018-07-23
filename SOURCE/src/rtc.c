@@ -1,7 +1,6 @@
 #include "rtc.h"
 
-void RTC_IRQHandler (void)
-{
+void RTC_IRQHandler (void){
   if(RTC->CRL & RTC_CRL_SECF)
   {
     RTC->CRL &= ~RTC_CRL_SECF;
@@ -40,7 +39,7 @@ void RtcInit(void){
     RTC->PRLL = 0x7FFF;
     RTC->CRL &= ~RTC_CRL_CNF;
     while (!(RTC->CRL & RTC_CRL_RTOFF));
-    RTC->CRL &= (uint16_t)~RTC_CRL_RSF;
+    RTC->CRL &= (uint16_t) ~RTC_CRL_RSF;
     while((RTC->CRL & RTC_CRL_RSF) != RTC_CRL_RSF){}
     PWR->CR &= ~PWR_CR_DBP;
   }
@@ -60,7 +59,7 @@ void RtcSetCounter(uint32_t count){
   PWR->CR |= PWR_CR_DBP;
   while (!(RTC->CRL & RTC_CRL_RTOFF));
   RTC->CRL |= RTC_CRL_CNF;
-  RTC->CNTH = count>>16;
+  RTC->CNTH = count >> 16;
   RTC->CNTL = count;
   RTC->CRL &= ~RTC_CRL_CNF;
   while (!(RTC->CRL & RTC_CRL_RTOFF));

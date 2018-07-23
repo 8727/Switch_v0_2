@@ -6,12 +6,11 @@ void SysTick_Handler(void){
 }
 
 void Setting(void){
-  
   SysTick_Config(SystemCoreClock / 1000); //1ms
   
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
   
-  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE + AFIO_MAPR_TIM2_REMAP_FULLREMAP;
+  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE + AFIO_MAPR_TIM2_REMAP_FULLREMAP + AFIO_MAPR_I2C1_REMAP;
   
   RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
   RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
@@ -27,6 +26,7 @@ void Setting(void){
   Xpt2046Init();
   
   W25QxxInit();
+  W25QxxReadImgTable();
   
   
   
