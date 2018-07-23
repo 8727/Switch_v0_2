@@ -54,7 +54,7 @@ void LcdInitt(void){
   
   
   ILI9488_RESET_LOW;
-  LcdDelay (2000000);      //25ms
+  LcdDelay (400000);      //25ms
   ILI9488_RESET_HIGHT;
 
   LcdSendCommand(0xE0);
@@ -122,7 +122,7 @@ void LcdInitt(void){
   LcdSendData(0x2C);
   LcdSendData(0x82);
   LcdSendCommand(0x11);
-  LcdDelay (9600000);      //120ms
+  LcdDelay (1920000);      //120ms
   LcdSendCommand(0x29);
   
   LcdSetWindows(0x0000, 0x0000, 0x01E0, 0x0040);
