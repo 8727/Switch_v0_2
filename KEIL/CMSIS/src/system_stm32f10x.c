@@ -1015,7 +1015,7 @@ static void SetSysClockTo72(void)
 
     /* Flash 2 wait state */
     FLASH->ACR &= (uint32_t)((uint32_t)~FLASH_ACR_LATENCY);
-    FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_1;    
+    FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_1;
 
  
     /* HCLK = SYSCLK */
