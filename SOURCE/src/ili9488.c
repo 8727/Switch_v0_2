@@ -49,11 +49,12 @@ void LcdInitt(void){
   RCC->AHBENR |= RCC_AHBENR_FSMCEN;
   
   FSMC_Bank1->BTCR[0] = FSMC_BCR1_MWID_0 | FSMC_BCR1_WREN | FSMC_BCR1_MBKEN;
-  //FSMC_Bank1->BTCR[1] = FSMC_BTR1_ADDSET_3 | FSMC_BTR1_DATAST_3 | FSMC_BTR1_BUSTURN_3 ;
+  FSMC_Bank1->BTCR[1] = FSMC_BTR1_DATAST_0;
   
   ILI9488_RESET_LOW;
-  DelayMs (25);      //25ms
+  LcdDelay (312500);      //25ms
   ILI9488_RESET_HIGHT;
+  LcdDelay (125000);      //10ms
 
   LcdSendCommand(0xE0);
   LcdSendData(0x00);
@@ -120,33 +121,13 @@ void LcdInitt(void){
   LcdSendData(0x2C);
   LcdSendData(0x82);
   LcdSendCommand(0x11);
-  DelayMs (120);      //120ms
+  LcdDelay (1500000);      //120ms
   LcdSendCommand(0x29);
   
-  LcdSetWindows(0x0000, 0x0000, 0x01E0, 0x0040);
-  uint16_t i = 0x7800;
-  while(i--){
-    LcdSendData(RED);
-  }
-  LcdSetWindows(0x0000, 0x0041, 0x01E0, 0x0080);
-  i = 0x7800;
-  while(i--){
-    LcdSendData(WHITE);
-  }
-  LcdSetWindows(0x0000, 0x0081, 0x01E0, 0x00C0);
-  i = 0x7800;
+  LcdSetWindows(0x0000, 0x0000, 0x01E0, 0x0140);
+  uint32_t i = 0x00025800;
   while(i--){
     LcdSendData(BLACK);
-  }
-  LcdSetWindows(0x0000, 0x00C1, 0x01E0, 0x0100);
-  i = 0x7800;
-  while(i--){
-    LcdSendData(GREEN);
-  }
-  LcdSetWindows(0x0000, 0x0101, 0x01E0, 0x0140);
-  i = 0x7800;
-  while(i--){
-    LcdSendData(BLUE);
   }
 }
 
@@ -158,7 +139,7 @@ void BrighetLcdInit(void){
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
   TIM2->PSC = 0x0FFF;
   TIM2->ARR = 0xFF;
-  TIM2->CCR1 = 0xFF;  // Brighet LCD
+  TIM2->CCR1 = 0x00;  // Brighet LCD
   TIM2->CCER |= TIM_CCER_CC1E;
   TIM2->CCMR1 |= TIM_CCMR1_OC1M_2;
   TIM2->CCMR1 |= TIM_CCMR1_OC1M_1;

@@ -12,8 +12,6 @@
 #define LCD_DATA                  *(uint16_t *) (0x60020000)
 #define LCD_REG                   *(uint16_t *) (0x60000000)
 
-//#define FSMC_
-
 
 
 #define BLACK         0x0000      /*   0,   0,   0 */

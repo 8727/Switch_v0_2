@@ -35,6 +35,7 @@ void Setting(void){
   RtcInit();
   BrighetLcdInit();
   LcdInitt();
+  TIM2->CCR1 = 0x80;
   Xpt2046Init();
   
   W25QxxInit();
