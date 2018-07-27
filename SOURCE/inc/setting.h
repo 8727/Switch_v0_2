@@ -12,6 +12,9 @@
 
 /* Define --------------------------------------------------------------------*/
 
+uint32_t GetTick(void);
+void DelayMs(uint32_t ms);
+
 void Setting(void);
 
 #endif /* _SETTING_H */

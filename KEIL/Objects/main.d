@@ -7,5 +7,6 @@
 .\objects\main.o: ..\SOURCE\inc\setting.h
 .\objects\main.o: ..\SOURCE\inc\rtc.h
 .\objects\main.o: ..\SOURCE\inc\ili9488.h
+.\objects\main.o: ..\SOURCE\inc\setting.h
 .\objects\main.o: ..\SOURCE\inc\xpt2046.h
 .\objects\main.o: ..\SOURCE\inc\w25qxx.h

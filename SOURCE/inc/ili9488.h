@@ -3,7 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
-
+#include "setting.h"
 
 /* Define --------------------------------------------------------------------*/
 #define ILI9488_RESET_LOW         GPIOD->BRR = GPIO_BRR_BR3
@@ -11,6 +11,9 @@
 
 #define LCD_DATA                  *(uint16_t *) (0x60020000)
 #define LCD_REG                   *(uint16_t *) (0x60000000)
+
+//#define FSMC_
+
 
 
 #define BLACK         0x0000      /*   0,   0,   0 */

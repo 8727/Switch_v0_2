@@ -6,5 +6,6 @@
 .\objects\setting.o: .\CMSIS\inc\system_stm32f10x.h
 .\objects\setting.o: ..\SOURCE\inc\rtc.h
 .\objects\setting.o: ..\SOURCE\inc\ili9488.h
+.\objects\setting.o: ..\SOURCE\inc\setting.h
 .\objects\setting.o: ..\SOURCE\inc\xpt2046.h
 .\objects\setting.o: ..\SOURCE\inc\w25qxx.h

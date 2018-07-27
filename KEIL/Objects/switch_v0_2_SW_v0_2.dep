@@ -13,19 +13,19 @@ I (.\CMSIS\inc\stm32f10x.h)(0x5B466F46)
 I (.\CMSIS\inc\core_cm3.h)(0x4D5281A8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
 I (.\CMSIS\inc\system_stm32f10x.h)(0x4D7882FA)
-I (..\SOURCE\inc\setting.h)(0x5B55DF28)
+I (..\SOURCE\inc\setting.h)(0x5B5B3FFE)
 I (..\SOURCE\inc\rtc.h)(0x5B55D3CA)
-I (..\SOURCE\inc\ili9488.h)(0x5B5839C1)
+I (..\SOURCE\inc\ili9488.h)(0x5B5B3FA0)
 I (..\SOURCE\inc\xpt2046.h)(0x5B55D3FE)
 I (..\SOURCE\inc\w25qxx.h)(0x5B5839C1)
-F (..\SOURCE\src\setting.c)(0x5B5839C1)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\setting.o --omf_browse .\objects\setting.crf --depend .\objects\setting.d)
-I (..\SOURCE\inc\setting.h)(0x5B55DF28)
+F (..\SOURCE\src\setting.c)(0x5B5B3FA0)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\setting.o --omf_browse .\objects\setting.crf --depend .\objects\setting.d)
+I (..\SOURCE\inc\setting.h)(0x5B5B3FFE)
 I (.\CMSIS\inc\stm32f10x.h)(0x5B466F46)
 I (.\CMSIS\inc\core_cm3.h)(0x4D5281A8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
 I (.\CMSIS\inc\system_stm32f10x.h)(0x4D7882FA)
 I (..\SOURCE\inc\rtc.h)(0x5B55D3CA)
-I (..\SOURCE\inc\ili9488.h)(0x5B5839C1)
+I (..\SOURCE\inc\ili9488.h)(0x5B5B3FA0)
 I (..\SOURCE\inc\xpt2046.h)(0x5B55D3FE)
 I (..\SOURCE\inc\w25qxx.h)(0x5B5839C1)
 F (..\SOURCE\src\rtc.c)(0x5B5839C1)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\rtc.o --omf_browse .\objects\rtc.crf --depend .\objects\rtc.d)
@@ -34,12 +34,16 @@ I (.\CMSIS\inc\stm32f10x.h)(0x5B466F46)
 I (.\CMSIS\inc\core_cm3.h)(0x4D5281A8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
 I (.\CMSIS\inc\system_stm32f10x.h)(0x4D7882FA)
-F (..\SOURCE\src\ili9488.c)(0x5B5839C1)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\ili9488.o --omf_browse .\objects\ili9488.crf --depend .\objects\ili9488.d)
-I (..\SOURCE\inc\ili9488.h)(0x5B5839C1)
+F (..\SOURCE\src\ili9488.c)(0x5B5B42DD)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\ili9488.o --omf_browse .\objects\ili9488.crf --depend .\objects\ili9488.d)
+I (..\SOURCE\inc\ili9488.h)(0x5B5B3FA0)
 I (.\CMSIS\inc\stm32f10x.h)(0x5B466F46)
 I (.\CMSIS\inc\core_cm3.h)(0x4D5281A8)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F137E)
 I (.\CMSIS\inc\system_stm32f10x.h)(0x4D7882FA)
+I (..\SOURCE\inc\setting.h)(0x5B5B3FFE)
+I (..\SOURCE\inc\rtc.h)(0x5B55D3CA)
+I (..\SOURCE\inc\xpt2046.h)(0x5B55D3FE)
+I (..\SOURCE\inc\w25qxx.h)(0x5B5839C1)
 F (..\SOURCE\src\xpt2046.c)(0x5B5839C1)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O1 --apcs=interwork --split_sections -I Z:\Switch_v0_2 -I .\CMSIS\inc -I ..\SOURCE\inc-I.\RTE\_SW_v0_2-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_HD-o .\objects\xpt2046.o --omf_browse .\objects\xpt2046.crf --depend .\objects\xpt2046.d)
 I (..\SOURCE\inc\xpt2046.h)(0x5B55D3FE)
 I (.\CMSIS\inc\stm32f10x.h)(0x5B466F46)
