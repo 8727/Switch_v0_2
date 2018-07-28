@@ -6,6 +6,7 @@
 #include "rtc.h"
 #include "ili9488.h"
 #include "xpt2046.h"
+#include "Eeprom24cxx.h"
 
 #include "w25qxx.h"
 

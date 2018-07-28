@@ -8,18 +8,24 @@ void LcdSendData(uint16_t data){
   LCD_DATA = data;
 }
 
-void LcdSetWindows(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end){
+void LcdSetWindows(uint16_t x, uint16_t y, uint16_t width, uint16_t height){
+
+//  if(hx8347i.width < width) width = hx8347i.width;
+//  if(hx8347i.height < height) height = hx8347i.height;
+//  if(hx8347i.width < (x + width)) x = hx8347i.width - width;
+//  if(hx8347i.height <(y + height)) y = hx8347i.height - height;
+
   LcdSendCommand(0x2A); 
-  LcdSendData(x_start >> 8);
-  LcdSendData(x_start);
-  LcdSendData(x_end >> 8);
-  LcdSendData(x_end);
+  LcdSendData(x >> 8);
+  LcdSendData(x);
+  LcdSendData((x + width - 0x01) >> 8);
+  LcdSendData(x + width - 0x01);
   LcdSendCommand(0x2B); 
-  LcdSendData(y_start >> 8);
-  LcdSendData(y_start);
-  LcdSendData(y_end >> 8);
-  LcdSendData(y_end);
-  LcdSendCommand(0x2C); 
+  LcdSendData(y >> 8);
+  LcdSendData(y);
+  LcdSendData((y + height - 0x01) >> 8);
+  LcdSendData(y + height - 0x01);
+  LcdSendCommand(0x2C);
 }
 
 void LcdDelay (uint32_t timedelay){
@@ -55,7 +61,7 @@ void LcdInitt(void){
   LcdDelay (312500);      //25ms
   ILI9488_RESET_HIGHT;
   LcdDelay (125000);      //10ms
-
+  
   LcdSendCommand(0xE0);
   LcdSendData(0x00);
   LcdSendData(0x07);
@@ -101,7 +107,7 @@ void LcdInitt(void){
   LcdSendData(0x00);
   LcdSendData(0x0A);
   LcdSendData(0x80);
-
+  
   LcdSendCommand(0xB6);
   LcdSendData(0x02);
   LcdSendCommand(0xB7);
@@ -128,6 +134,11 @@ void LcdInitt(void){
   uint32_t i = 0x00025800;
   while(i--){
     LcdSendData(BLACK);
+  }
+  LcdSetWindows(239, 159, 240, 160);
+  i = 0x04;
+  while(i--){
+    LcdSendData(WHITE);
   }
 }
 

@@ -1,5 +1,10 @@
 #include "xpt2046.h"
 
+void EXTI15_10_IRQHandler(void)
+{
+  EXTI->PR |= EXTI_PR_PR11;
+}
+
 void Xpt2046ReadAdc(uint8_t a, uint8_t b, uint16_t *data_a,  uint16_t *data_b){
   XPT2046_CS_LOW;
   while(!(SPI2->SR & SPI_SR_TXE));
