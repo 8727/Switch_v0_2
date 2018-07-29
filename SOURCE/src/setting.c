@@ -31,10 +31,9 @@ void Setting(void){
   RCC->APB2ENR |= RCC_APB2ENR_IOPGEN;
   
   RtcInit();
-  BrighetLcdInit();
   EepromInitt();
   LcdInitt();
-  TIM2->CCR1 = 0x10;
+  TIM2->CCR1 = 0x20;
   Xpt2046Init();
   
   W25QxxInit();

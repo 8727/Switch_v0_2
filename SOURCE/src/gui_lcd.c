@@ -1,17 +1,23 @@
 /************************** Start of file ***************************/
 #include "gui_lcd.h"
 
+void LcdSendCommand(uint16_t reg){
+  LCD_REG = reg; 
+}
+
+void LcdSendData(uint16_t data){
+  LCD_DATA = data;
+}
+
 /********************************************************************/
-void Gui_Draw_Pixel(uint16_t color, uint16_t size)
-{
+void Gui_Draw_Pixel(uint16_t color, uint16_t size){
   for(uint16_t i = 0x00; i < size; i++){
     LCD_DATA = color;
   }
 }
 
 ///********************************************************************/
-//void Gui_Draw_Line (uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end, uint8_t size, uint16_t color)
-//{
+//void Gui_Draw_Line (uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end, uint8_t size, uint16_t color){
 //  int deltaX = abs(x_end - x);
 //  int deltaY = abs(y_end - y);
 //  int signX = x < x_end ? 0x01 : -1;
@@ -62,8 +68,7 @@ void Gui_Draw_Pixel(uint16_t color, uint16_t size)
 //}
 
 ///********************************************************************/
-void Gui_Draw_Fill_Rectangle(uint16_t x, uint16_t y, uint16_t length, uint16_t width, uint16_t color)
-{
+void Gui_Draw_Fill_Rectangle(uint16_t x, uint16_t y, uint16_t length, uint16_t width, uint16_t color){
   LcdSetWindows(x, y, length, width);
   Gui_Draw_Pixel(color, length * width);
 }
@@ -326,7 +331,26 @@ void Gui_Draw_Fill_Rectangle(uint16_t x, uint16_t y, uint16_t length, uint16_t w
 //  W25Qxx_CS_HIGHT;
 //  HX8347I_CS_HIGHT;
 //}
+//#pragma O1
+void LcdSetWindows(uint16_t x, uint16_t y, uint16_t width, uint16_t height){
 
+//  if(hx8347i.width < width) width = hx8347i.width;
+//  if(hx8347i.height < height) height = hx8347i.height;
+//  if(hx8347i.width < (x + width)) x = hx8347i.width - width;
+//  if(hx8347i.height <(y + height)) y = hx8347i.height - height;
+
+  LcdSendCommand(0x2A); 
+  LcdSendData(x >> 8);
+  LcdSendData(x);
+  LcdSendData((x + width - 0x01) >> 8);
+  LcdSendData(x + width - 0x01);
+  LcdSendCommand(0x2B); 
+  LcdSendData(y >> 8);
+  LcdSendData(y);
+  LcdSendData((y + height - 0x01) >> 8);
+  LcdSendData(y + height - 0x01);
+  LcdSendCommand(0x2C);
+}
 /********************************************************************/
 void Gui_Print_Char(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t zoom, uint8_t str)
 {
@@ -431,4 +455,3 @@ void Gui_Print_Chars(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8
     str++;
   }
 }
-/*************************** End of file ****************************/
