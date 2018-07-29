@@ -11,7 +11,7 @@ void Gui_time (void){
 int main (void){
   Setting();
   //RtcSetCounter(1532509102);
-//  Gui_Print_Chars(0x0000, 0x0000, WHITE, BLACK, 0x11, (uint8_t*)"213");
+  GuiPrintDigits(0x00, 120, WHITE, RED, 5);
   while(1){
     RtcCounterToTime(RtcGetCounter()+10800);
     Gui_time();

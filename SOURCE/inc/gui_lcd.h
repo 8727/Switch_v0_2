@@ -6,6 +6,7 @@
 
 #include "w25qxx.h"
 #include "gui_font.h"
+#include "gui_font_0_9.h"
 #include "stdlib.h"
 
 /* Includes ------------------------------------------------------------------*/
@@ -34,6 +35,8 @@
 #define ORANGE        0xFD20      /* 255, 165,   0 */
 #define GREENYELLOW   0xAFE5      /* 173, 255,  47 */
 
+
+void GuiPrintDigits(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t str);
 void LcdSetWindows(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 
 void Gui_Draw_Pixel(uint16_t color, uint16_t size);

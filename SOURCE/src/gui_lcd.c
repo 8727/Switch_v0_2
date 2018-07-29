@@ -351,9 +351,32 @@ void LcdSetWindows(uint16_t x, uint16_t y, uint16_t width, uint16_t height){
   LcdSendData(y + height - 0x01);
   LcdSendCommand(0x2C);
 }
-/********************************************************************/
-void Gui_Print_Char(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t zoom, uint8_t str)
-{
+
+void GuiPrintDigits(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t str){
+  uint8_t c, s;
+  uint16_t c_addr;
+  uint8_t i = 192;
+  c_addr = (str * 192)-12;
+  LcdSetWindows(x, y, 64, 50);
+  while(i--){
+  c = fonts_Bit_0_9[c_addr];
+  s = 0x08;
+  while(s--){
+    if(c & 0x80){
+      Gui_Draw_Pixel(ink, 0x02);
+    }else{
+      Gui_Draw_Pixel(paper, 0x02);
+    }
+    c <<= 0x01;
+  }
+  c_addr++;
+  }
+  
+  
+}
+
+
+void Gui_Print_Char(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t zoom, uint8_t str){
   uint8_t ch_width = fonts_Descriptors[(str - 0x21)][0x00];
   uint16_t ch_address = (fonts_Descriptors[(str - 0x21)][0x01]) * CH_HEIGHT;
   uint8_t x1, x2, x1i, x2i, zy, char_c = 0x00;
@@ -409,8 +432,7 @@ void Gui_Print_Char(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_
 }
 
 /********************************************************************/
-void Gui_Print_Chars(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t zoom, const uint8_t str[])
-{   
+void Gui_Print_Chars(uint16_t x, uint16_t y, uint16_t ink, uint16_t paper, uint8_t zoom, const uint8_t str[]){
   uint8_t zy = zoom & 0x0F;
   uint8_t zx = (zoom >> 0x04);
   uint8_t ch_x;

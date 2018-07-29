@@ -4,7 +4,7 @@ void LcdDelay (uint32_t timedelay){
   while (timedelay--) {}
 }
 
-//#pragma O0
+#pragma O0
 void LcdInitt(void){
   GPIOA->CRH &= ~(GPIO_CRH_CNF15);
   GPIOA->CRH |= GPIO_CRH_CNF15_1;
