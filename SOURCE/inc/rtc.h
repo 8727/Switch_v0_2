@@ -3,7 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
-
+#include "setting.h"
 
 /* Define --------------------------------------------------------------------*/
 #define SEC_A_DAY 86400
@@ -21,7 +21,6 @@ struct RtcInitTypeDef{
 };
 
 extern struct RtcInitTypeDef rtc;
-//extern struct RtcInitTypeDef temprtc;
 
 void RtcCounterToTime (uint32_t counter);
 uint32_t RtcTimeToCounter(void);

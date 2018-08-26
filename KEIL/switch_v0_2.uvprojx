@@ -437,14 +437,24 @@
               <FilePath>..\SOURCE\src\w25qxx.c</FilePath>
             </File>
             <File>
-              <FileName>Eeprom24cxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SOURCE\src\Eeprom24cxx.c</FilePath>
-            </File>
-            <File>
               <FileName>gui_lcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\gui_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>Ee24cxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\Ee24cxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>dht22.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\dht22.c</FilePath>
+            </File>
+            <File>
+              <FileName>ds18b20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\ds18b20.c</FilePath>
             </File>
           </Files>
         </Group>

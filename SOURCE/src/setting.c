@@ -1,5 +1,6 @@
 #include "setting.h"
 
+struct settingsInitTypeDef settings;
 static __IO uint32_t msTicks;
 
 void SysTick_Handler(void){
@@ -30,11 +31,14 @@ void Setting(void){
   RCC->APB2ENR |= RCC_APB2ENR_IOPFEN;
   RCC->APB2ENR |= RCC_APB2ENR_IOPGEN;
   
+  Ee24cxxInitt();
+//  Ee24cxxReadConfig();
   RtcInit();
-  EepromInitt();
   LcdInitt();
   TIM2->CCR1 = 0x20;
   Xpt2046Init();
+  Dht22Init();
+  Ds18b20Init();
   
   W25QxxInit();
   W25QxxReadImgTable();

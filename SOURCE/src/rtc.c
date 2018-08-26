@@ -1,9 +1,8 @@
 #include "rtc.h"
 
 struct RtcInitTypeDef rtc;
-//struct RtcInitTypeDef temprtc;
 
-void RTC_IRQHandler (void){
+void RTC_IRQHandler(void){
   if(RTC->CRL & RTC_CRL_SECF)
   {
     RTC->CRL &= ~RTC_CRL_SECF;
@@ -28,7 +27,7 @@ void RTC_IRQHandler (void){
 
 
 
-void RtcCounterToTime (uint32_t counter){
+void RtcCounterToTime(uint32_t counter){
   uint32_t a, t;
   char b, c, d;
   t = counter % SEC_A_DAY;
@@ -60,7 +59,7 @@ uint32_t RtcTimeToCounter(void){
 }
 
 uint32_t RtcGetCounter(void){
-  return (uint32_t)((RTC->CNTH << 16) | RTC->CNTL);
+  return (uint32_t)((RTC->CNTH << 0x10) | RTC->CNTL);
 }
 
 void RtcSetCounter(uint32_t counter){
@@ -87,10 +86,13 @@ void RtcInit(void){
     RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
     RCC->BDCR |= RCC_BDCR_LSEON;
     while ((RCC->BDCR & RCC_BDCR_LSEON) != RCC_BDCR_LSEON){}
-    BKP->RTCCR |= 0x00;
+    BKP->RTCCR |= settings.calibration;
     while (!(RTC->CRL & RTC_CRL_RTOFF));
     RTC->CRL |= RTC_CRL_CNF;
     RTC->PRLL = 0x7FFF;
+//    BKP->RTCCR |= BKP_RTCCR_CCO;
+    RTC->CNTH = settings.date >> 0x10;
+    RTC->CNTL = settings.date;
     RTC->CRL &= ~RTC_CRL_CNF;
     while (!(RTC->CRL & RTC_CRL_RTOFF));
     RTC->CRL &= (uint16_t) ~RTC_CRL_RSF;
@@ -100,5 +102,6 @@ void RtcInit(void){
   RTC->CRH |= RTC_CRH_SECIE;
 //  RTC->CRH |= RTC_CRH_ALRIE;
 //  RTC->CRH |= RTC_CRH_OWIE;
+  NVIC_SetPriority(RTC_IRQn, PRIORITY_RTC);
   NVIC_EnableIRQ (RTC_IRQn);
 }
