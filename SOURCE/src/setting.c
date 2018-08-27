@@ -36,14 +36,15 @@ void ReadConfig(void){
   uint8_t tempReadBuff[0x30];
   uint8_t tempWriteBuff[0x08];
   Ee24cxxRead(0x00, tempReadBuff, 0x30);
-  if(0x00 != tempReadBuff[EEPROM_STATUS]){
-    rtc.year  = BUILD_YEAR;
-    rtc.month = BUILD_MONTH;
-    rtc.day   = BUILD_DAY;
-    rtc.hour  = BUILD_TIME_H;
-    rtc.min   = BUILD_TIME_M;
-    rtc.sec   = BUILD_TIME_S;
-    CounterToBuffer(RtcTimeToCounter(), tempWriteBuff);
+  if(0xFF != tempReadBuff[EEPROM_STATUS]){
+    RtcTypeDef unixTime;
+    unixTime.year  = BUILD_YEAR;
+    unixTime.month = BUILD_MONTH;
+    unixTime.day   = BUILD_DAY;
+    unixTime.hour  = BUILD_TIME_H;
+    unixTime.min   = BUILD_TIME_M;
+    unixTime.sec   = BUILD_TIME_S;
+    CounterToBuffer(RtcTimeToCounter(&unixTime), tempWriteBuff);
     Ee24cxxWritePage(EEPROM_BUILD_DATE, tempWriteBuff, 0x04);
     Ee24cxxWriteByte(EEPROM_STATUS, 0x00);
     Ee24cxxWriteByte(EEPROM_DEVICE_N, DEVICE_NUMBER);
@@ -73,8 +74,8 @@ void ReadConfig(void){
   
   
   
-  dht22.humidity = 0xFFFF;
-  dht22.temperature = 0xFFFF;
+//  dht22.humidity = 0xFFFF;
+//  dht22.temperature = 0xFFFF;
 }
 
 void CounterToBuffer(uint32_t counter, uint8_t* buff){
@@ -96,12 +97,11 @@ void Setting(void){
   Ee24cxxInit();
   ReadConfig();
   RtcInit();
-//  LcdInitt();
-//  TIM2->CCR1 = 0x20;
-//  Xpt2046Init();
-//  Dht22Init();
-//  Ds18b20Init();
-  
+  LcdInitt();
+  TIM2->CCR1 = 0x20;
+  Xpt2046Init();
+  Dht22Init();
+  Ds18b20Init();
   W25QxxInit();
   W25QxxReadImgTable();
 }

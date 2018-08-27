@@ -1,7 +1,5 @@
 #include "rtc.h"
 
-struct RtcInitTypeDef rtc;
-
 void RTC_IRQHandler(void){
   if(RTC->CRL & RTC_CRL_SECF)
   {
@@ -17,45 +15,39 @@ void RTC_IRQHandler(void){
 //    
 //    
 //  }
-//  if(RTC->CRL & RTC_CRL_OWF)
-//  {
-//    RTC->CRL &= ~RTC_CRL_OWF;
-//    
-//    
-//  }
 }
 
 
 
-void RtcCounterToTime(uint32_t counter){
+void RtcCounterToTime(uint32_t counter, RtcTypeDef* unixTim){
   uint32_t a, t;
   char b, c, d;
   t = counter % SEC_A_DAY;
-  a = ((counter + 43200) / (SEC_A_DAY >> 1)) + (2440587 << 1) + 1;
-  a >>= 1;
-  rtc.wday = a % 7;
-  a += 32044;
-  b = (4 * a + 3) / 146097;
-  a = a - (146097 * b) / 4;
-  c = (4 * a + 3) / 1461;
-  a = a - (1461 * c) / 4;
-  d = (5 * a + 2) / 153;
-  rtc.day = a - (153 * d + 2) / 5 + 1;
-  rtc.month = d + 3 - 12 * (d / 10);
-  rtc.year = 100 * b + c - 4800 + (d / 10);
-  rtc.hour = t / 3600;
-  rtc.min = (t % 3600) / 60;
-  rtc.sec = (t % 3600) % 60;
+  a = ((counter + 0xA8C0) / (SEC_A_DAY >> 0x01)) + (0x00254D8B << 0x01) + 0x01;
+  a >>= 0x01;
+  unixTim->wday = a % 0x07;
+  a += 0x7D2C;
+  b = (0x04 * a + 0x03) / 0x00023AB1;
+  a = a - (0x00023AB1 * b) / 0x04;
+  c = (0x04 * a + 0x03) / 0x05B5;
+  a = a - (0x05B5 * c) / 0x04;
+  d = (0x05 * a + 0x02) / 0x99;
+  unixTim->day = a - (0x99 * d + 0x02) / 0x05 + 0x01;
+  unixTim->month = d + 0x03 - 0x0C * (d / 0x0A);
+  unixTim->year = 0x64 * b + c - 0x12C0 + (d / 0x0A);
+  unixTim->hour = t / 0x0E10;
+  unixTim->min = (t % 0x0E10) / 0x3C;
+  unixTim->sec = (t % 0x0E10) % 0x3C;
 }
 
-uint32_t RtcTimeToCounter(void){
+uint32_t RtcTimeToCounter(RtcTypeDef* unixTime){
   uint8_t a, m;
   uint16_t y;
-  a = ((14 - rtc.month) / 12);
-  y = rtc.year + 4800 - a;
-  m = rtc.month + (12 * a) - 3;
-  return (((rtc.day + ((153 * m + 2) / 5) + 365 * y + (y / 4) - (y / 100) + (y / 400) - 32045) - 2440588) * 
-          SEC_A_DAY) + rtc.sec + rtc.min * 60 + rtc.hour * 3600;
+  a = ((0x0E - unixTime->month) / 0x0C);
+  y = unixTime->year + 0x12C0 - a;
+  m = unixTime->month + (0x0C * a) - 0x03;
+  return (((unixTime->day + ((0x99 * m + 0x02) / 0x05) + 0x016D * y + (y / 0x04) - (y / 0x64) + (y / 0x0190) - 0x7D2D) - 0x00253D8C) * 
+          SEC_A_DAY) + unixTime->sec + unixTime->min * 0x3C + unixTime->hour * 0x0E10;
 }
 
 uint32_t RtcGetCounter(void){
@@ -68,7 +60,7 @@ void RtcSetCounter(uint32_t counter){
   PWR->CR |= PWR_CR_DBP;
   while (!(RTC->CRL & RTC_CRL_RTOFF));
   RTC->CRL |= RTC_CRL_CNF;
-  RTC->CNTH = counter >> 16;
+  RTC->CNTH = counter >> 0x10;
   RTC->CNTL = counter;
   RTC->CRL &= ~RTC_CRL_CNF;
   while (!(RTC->CRL & RTC_CRL_RTOFF));

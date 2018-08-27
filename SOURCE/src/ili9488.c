@@ -41,13 +41,13 @@ void LcdInitt(void){
 
   RCC->AHBENR |= RCC_AHBENR_FSMCEN;
 
-  FSMC_Bank1->BTCR[0] = FSMC_BCR1_MWID_0 | FSMC_BCR1_WREN | FSMC_BCR1_MBKEN;
-  FSMC_Bank1->BTCR[1] = FSMC_BTR1_DATAST_0;
+  FSMC_Bank1->BTCR[0x00] = FSMC_BCR1_MWID_0 | FSMC_BCR1_WREN | FSMC_BCR1_MBKEN;
+  FSMC_Bank1->BTCR[0x01] = FSMC_BTR1_DATAST_0;
 
   ILI9488_RESET_LOW;
-  LcdDelay (312500);      //25ms
+  LcdDelay (0x0004C4B4);      //25ms
   ILI9488_RESET_HIGHT;
-  LcdDelay (125000);      //10ms
+  LcdDelay (0x0001E848);      //10ms
 
   LCD_REG = 0xE0;
   LCD_DATA = 0x00;
@@ -114,7 +114,7 @@ void LcdInitt(void){
   LCD_DATA = 0x2C;
   LCD_DATA = 0x82;
   LCD_REG = 0x11;
-  LcdDelay (1500000);      //120ms
+  LcdDelay (0x000249F0);      //120ms
   LCD_REG = 0x29;
 
   LCD_REG = 0x2A;
