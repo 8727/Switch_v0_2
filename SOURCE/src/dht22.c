@@ -1,24 +1,20 @@
 #include "dht22.h"
 
 struct Dht22InitTypeDef dht22;
+static uint16_t dht22Delay[0x04] = {0xC288, 0xFFFF, 0xFFFF, 0xFFFF};
 
 void Dht22Init(void){
-  dht22.timDelayBuff[0x00] = 0xC288; //49800;
-  dht22.timDelayBuff[0x01] = 0xffff;
-  dht22.timDelayBuff[0x02] = 0xffff;
-  dht22.timDelayBuff[0x03] = 0xffff;
-  
   GPIOD->CRH |= GPIO_CRH_MODE12;
   GPIOD->CRH |= GPIO_CRH_CNF12;
   
   RCC->AHBENR |= RCC_AHBENR_DMA1EN;
   DMA1_Channel7->CCR = 0x00;
-  DMA1_Channel7->CMAR = (uint32_t) &dht22.timDelayBuff[0x00];
+  DMA1_Channel7->CMAR = (uint32_t) &dht22Delay[0x00];
   DMA1_Channel7->CPAR = (uint32_t) &TIM4->CCR1;
-  DMA1_Channel7->CNDTR = sizeof(dht22.timDelayBuff)/sizeof(*dht22.timDelayBuff);
+  DMA1_Channel7->CNDTR = sizeof(dht22Delay)/sizeof(*dht22Delay);
   DMA1_Channel7->CCR = DMA_CCR7_PL | DMA_CCR7_MSIZE_0 | DMA_CCR7_PSIZE_1 | DMA_CCR7_MINC | DMA_CCR7_CIRC | DMA_CCR7_DIR;
   DMA1->IFCR = DMA_IFCR_CGIF7 | DMA_IFCR_CHTIF7 | DMA_IFCR_CTCIF7 | DMA_IFCR_CTEIF7;
-  DMA1_Channel7->CCR |= DMA_CCR1_EN;
+  DMA1_Channel7->CCR |= DMA_CCR5_EN;//
   
   DMA1_Channel4->CCR = 0x00;
   DMA1_Channel4->CMAR = (uint32_t) &dht22.dataBuff[0x00];

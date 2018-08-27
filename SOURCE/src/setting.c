@@ -21,7 +21,7 @@ void Start(void){
   
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
   
-  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE + AFIO_MAPR_TIM2_REMAP_FULLREMAP + AFIO_MAPR_I2C1_REMAP;
+  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE + AFIO_MAPR_TIM2_REMAP_FULLREMAP + AFIO_MAPR_TIM4_REMAP + AFIO_MAPR_I2C1_REMAP;
   
   RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
   RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
@@ -74,8 +74,8 @@ void ReadConfig(void){
   
   
   
-//  dht22.humidity = 0xFFFF;
-//  dht22.temperature = 0xFFFF;
+  dht22.humidity = 0xFFFF;
+  dht22.temperature = 0xFFFF;
 }
 
 void CounterToBuffer(uint32_t counter, uint8_t* buff){

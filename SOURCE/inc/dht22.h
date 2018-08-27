@@ -9,7 +9,6 @@
 #define  BITBAND_RAMADR(xAdr, xBit)      ((uint32_t *)(SRAM_BB_BASE + ((xAdr - SRAM_BASE) * 0x20) + (xBit * 0x04)))
 
 struct Dht22InitTypeDef{
-  uint16_t timDelayBuff[0x04];
   uint16_t dataBuff[0x2A];
   uint16_t humidity;
   uint16_t temperature;
