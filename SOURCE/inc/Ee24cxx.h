@@ -8,12 +8,9 @@
 
 /* Define --------------------------------------------------------------------*/
 
-void CounterToBuffer(uint32_t counter, uint8_t* buff);
-uint32_t BufferToCounter(uint8_t* buff);
-void Ee24cxxReadConfig(void);
 void Ee24cxxRead(uint8_t addr, uint8_t* data, uint16_t len);
 void Ee24cxxWritePage(uint8_t page, uint8_t *data, uint8_t len);
 void Ee24cxxWriteByte(uint8_t addr, uint8_t data);
-void Ee24cxxInitt(void);
+void Ee24cxxInit(void);
 
 #endif /* _EEPROM24CXX_H */

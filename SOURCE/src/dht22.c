@@ -8,8 +8,8 @@ void Dht22Init(void){
   dht22.timDelayBuff[0x02] = 0xffff;
   dht22.timDelayBuff[0x03] = 0xffff;
   
-  GPIOA->CRH |= GPIO_CRH_MODE15;
-  GPIOA->CRH |= GPIO_CRH_CNF15;
+  GPIOD->CRH |= GPIO_CRH_MODE12;
+  GPIOD->CRH |= GPIO_CRH_CNF12;
   
   RCC->AHBENR |= RCC_AHBENR_DMA1EN;
   DMA1_Channel2->CCR = 0x00;

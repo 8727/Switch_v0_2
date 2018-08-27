@@ -8,10 +8,9 @@
 //  
 //}
 
-int main (void){
+int main(void){
+  Start();
   Setting();
-//  RtcSetCounter(1532509102);
-//  GuiPrintDigits(0x00, 120, WHITE, RED, 5);
   while(1){
 //    RtcCounterToTime(RtcGetCounter()+10800);
 //    Gui_time();

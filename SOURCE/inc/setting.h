@@ -112,6 +112,10 @@ extern struct settingsInitTypeDef settings;
 uint32_t GetTick(void);
 void DelayMs(uint32_t ms);
 
+void Start(void);
+void ReadConfig(void);
+void CounterToBuffer(uint32_t counter, uint8_t* buff);
+uint32_t BufferToCounter(uint8_t* buff);
 void Setting(void);
 
 #endif /* _SETTING_H */
