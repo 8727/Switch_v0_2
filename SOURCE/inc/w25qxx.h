@@ -37,17 +37,15 @@
 struct w25qxxInitTypeDef{
   uint8_t  id;
   char     *name;
-  
   uint8_t  imgtable[0x100];
-  uint8_t  tempbuff[0x100];
 };
 
 extern struct w25qxxInitTypeDef w25qxx;
 
 
 void W25QxxErase(void);
-void W25QxxReadPage(uint16_t page);
-void W25QxxWritePage(uint16_t page);
+void W25QxxReadPage(uint16_t page, uint8_t *buff);
+void W25QxxWritePage(uint16_t page, uint8_t *buff);
 void W25QxxReadImgTable(void);
 void W25QxxInit(void);
 

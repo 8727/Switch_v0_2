@@ -15,7 +15,7 @@ void W25QxxWriteWaitEnd(void){
   W25QxxWriteRead(CMD_R_STATUS_1);
   do{
     status = W25QxxWriteRead(0x00);
-  } while((status & 0x01) == 0x01);   // Write in progress 
+  }while((status & 0x01) == 0x01);   // Write in progress 
   W25Qxx_CS_HIGHT;
 }
 
@@ -39,7 +39,7 @@ void W25QxxErase(void){
   W25QxxWriteWaitEnd();
 }
 
-void W25QxxReadPage(uint16_t page){
+void W25QxxReadPage(uint16_t page, uint8_t *buff){
   W25Qxx_CS_LOW;
   W25QxxWriteRead(CMD_FAST_READ);
   W25QxxWriteRead((page & 0xFFFF) >> 0x08);
@@ -47,11 +47,11 @@ void W25QxxReadPage(uint16_t page){
   W25QxxWriteRead(0x00);
   W25QxxWriteRead(0x00);
   for(uint16_t i = 0x00; i < 0x0100; i++)
-    w25qxx.tempbuff[i] = W25QxxWriteRead(0x00);
+    buff[i] = W25QxxWriteRead(0x00);
   W25Qxx_CS_HIGHT;
 }
 
-void W25QxxWritePage(uint16_t page){
+void W25QxxWritePage(uint16_t page, uint8_t *buff){
   W25QxxWriteOn();
   W25Qxx_CS_LOW;
   W25QxxWriteRead(CMD_WRITE);
@@ -59,26 +59,18 @@ void W25QxxWritePage(uint16_t page){
   W25QxxWriteRead(page & 0x00FF);
   W25QxxWriteRead(0x00);
   for(uint16_t i = 0x00; i < 0x0100; i++)
-    W25QxxWriteRead(w25qxx.tempbuff[i]);
+    W25QxxWriteRead(buff[i]);
   W25Qxx_CS_HIGHT;
   W25QxxWriteWaitEnd();
   W25QxxWriteOff();
 }
 
 void W25QxxReadImgTable(void){
-  W25QxxReadPage(0x0000);
+  uint8_t buff[0x0100];
+  W25QxxReadPage(0x0000, buff);
   for(uint16_t i = 0x00; i < 0x0100; i++)
-    w25qxx.imgtable[i] = w25qxx.tempbuff[i];
+    w25qxx.imgtable[i] = buff[i];
 }
-
-
-
-
-
-
-
-
-
 
 void W25QxxInit(void){
   GPIOA->CRL &= ~(GPIO_CRL_CNF4 | GPIO_CRL_CNF5 | GPIO_CRL_CNF7);
