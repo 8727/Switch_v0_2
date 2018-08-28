@@ -44,7 +44,7 @@ void Dht22Init(void){
 void TIM4_IRQHandler(void){
   if(TIM4->SR & TIM_SR_CC1IF){
    DMA1_Channel4->CCR &= ~DMA_CCR4_EN;
-   DMA1_Channel4->CMAR = (uint32_t) &dht22.dataBuff[0x00];
+   DMA1_Channel4->CMAR = (uint32_t)&dht22.dataBuff[0x00];
    DMA1_Channel4->CNDTR = sizeof(dht22.dataBuff)/sizeof(*dht22.dataBuff);
    DMA1_Channel4->CCR |= DMA_CCR4_EN;
    TIM4->CCER |= TIM_CCER_CC2E;
@@ -62,7 +62,8 @@ void DMA1_Channel4_IRQHandler(void){
   if(DMA1->ISR & DMA_ISR_TCIF4){ // приняли данные от DHT22
     TIM4->CCER &= ~TIM_CCER_CC2E;
     b = BITBAND_RAMADR((uint32_t)&tData, 0x00);
-    for(a = 0x00; a < 0x28; a++) if((dht22.dataBuff[a + 0x02] - dht22.dataBuff[a + 0x01]) > 0x0A) b[0x27 - a] = 0x01;
+    for(a = 0x00; a < 0x28; a++)
+    if((dht22.dataBuff[a + 0x02] - dht22.dataBuff[a + 0x01]) > 0x0A) b[0x27 - a] = 0x01;
       else b[0x27 - a] = 0x00;
     tCRC = 0x00;
     for(a = 0x04; a > 0x00; a--) tCRC = tCRC + tDataBuff[a]; // подсчет CRC

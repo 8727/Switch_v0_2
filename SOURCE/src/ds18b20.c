@@ -115,18 +115,15 @@ void Ds18b20SearchROM(void){
 }
 
 void Ds18b20Read(void){
+  uint16_t temp;
   for(uint8_t i = 0x00; i < ds18b20Device; i++){
   Ds18b20Reset();
   Ds18b20SendByte(DS18B20_MATCH_ROM);
   for(uint8_t x = 0x00; x < 0x08; x++) Ds18b20SendByte(ds18b20[i].deviceID[x]);
   Ds18b20SendByte(DS18B20_READ_SCRATCHPAD);
-  ds18b20[i].temperatureL = Ds18b20ReadByte();
-  ds18b20[i].temperatureH = Ds18b20ReadByte();
-//  ds18b20[i].t1 = Ds18b20ReadByte();
-//  ds18b20[i].t2 = Ds18b20ReadByte();
-//  ds18b20[i].th = Ds18b20ReadByte();
-//  ds18b20[i].tl = Ds18b20ReadByte();
-//  ds18b20[i].conf = Ds18b20ReadByte();
+  temp = (Ds18b20ReadByte() << 0x08) | Ds18b20ReadByte();
+  ds18b20[i].temperature = ((temp & 0x0FFF) >> 0x04);
+  ds18b20[i].temp = (temp & 0x000F);
   }
   Ds18b20Reset();
   Ds18b20SendByte(DS18B20_SKIP_ROM);

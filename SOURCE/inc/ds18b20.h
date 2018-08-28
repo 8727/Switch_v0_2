@@ -17,14 +17,9 @@
 #define DS18B20_MAX_DEVICES                 0x04
 
 struct Ds18b20InitTypeDef{
-  uint8_t  deviceID[0x08];
-  uint8_t temperatureH;
-  uint8_t temperatureL;
-//  uint8_t t1;
-//  uint8_t t2;
-//  uint8_t th;
-//  uint8_t tl;
-//  uint8_t conf;
+  uint8_t deviceID[0x08];
+  int8_t temperature;
+  uint8_t temp;
 };
 
 extern struct Ds18b20InitTypeDef ds18b20[DS18B20_MAX_DEVICES];

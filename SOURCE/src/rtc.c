@@ -56,20 +56,18 @@ uint32_t RtcGetCounter(void){
 }
 
 void RtcSetCounter(uint32_t counter){
-  RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-  RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
   PWR->CR |= PWR_CR_DBP;
-  while (!(RTC->CRL & RTC_CRL_RTOFF));
+  while(!(RTC->CRL & RTC_CRL_RTOFF));
   RTC->CRL |= RTC_CRL_CNF;
   RTC->CNTH = counter >> 0x10;
   RTC->CNTL = counter;
   RTC->CRL &= ~RTC_CRL_CNF;
-  while (!(RTC->CRL & RTC_CRL_RTOFF));
+  while(!(RTC->CRL & RTC_CRL_RTOFF));
   PWR->CR &= ~PWR_CR_DBP;
 }
 
 void RtcInit(void){
-  if ((RCC->BDCR & RCC_BDCR_RTCEN) != RCC_BDCR_RTCEN){
+  if((RCC->BDCR & RCC_BDCR_RTCEN) != RCC_BDCR_RTCEN){
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
     RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
     PWR->CR |= PWR_CR_DBP;
@@ -78,16 +76,16 @@ void RtcInit(void){
     RCC->BDCR |= RCC_BDCR_RTCEN;
     RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
     RCC->BDCR |= RCC_BDCR_LSEON;
-    while ((RCC->BDCR & RCC_BDCR_LSEON) != RCC_BDCR_LSEON){}
+    while((RCC->BDCR & RCC_BDCR_LSEON) != RCC_BDCR_LSEON){}
     BKP->RTCCR |= settings.calibration;
-    while (!(RTC->CRL & RTC_CRL_RTOFF));
+    while(!(RTC->CRL & RTC_CRL_RTOFF));
     RTC->CRL |= RTC_CRL_CNF;
     RTC->PRLL = 0x7FFF;
 //    BKP->RTCCR |= BKP_RTCCR_CCO;
     RTC->CNTH = settings.date >> 0x10;
     RTC->CNTL = settings.date;
     RTC->CRL &= ~RTC_CRL_CNF;
-    while (!(RTC->CRL & RTC_CRL_RTOFF));
+    while(!(RTC->CRL & RTC_CRL_RTOFF));
     RTC->CRL &= (uint16_t) ~RTC_CRL_RSF;
     while((RTC->CRL & RTC_CRL_RSF) != RTC_CRL_RSF){}
     PWR->CR &= ~PWR_CR_DBP;
@@ -96,5 +94,5 @@ void RtcInit(void){
 //  RTC->CRH |= RTC_CRH_ALRIE;
 //  RTC->CRH |= RTC_CRH_OWIE;
   NVIC_SetPriority(RTC_IRQn, PRIORITY_RTC);
-  NVIC_EnableIRQ (RTC_IRQn);
+  NVIC_EnableIRQ(RTC_IRQn);
 }
