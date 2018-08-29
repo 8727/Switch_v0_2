@@ -45,9 +45,9 @@ void LcdInitt(void){
   FSMC_Bank1->BTCR[0x01] = FSMC_BTR1_DATAST_0;
 
   ILI9488_RESET_LOW;
-  LcdDelay(0x0004C4B4);      //25ms
+  LcdDelay(0x04C4B4);      //25ms
   ILI9488_RESET_HIGHT;
-  LcdDelay(0x0001E848);      //10ms
+  LcdDelay(0x01E848);      //10ms
 
   LCD_REG = 0xE0;
   LCD_DATA = 0x00;
@@ -114,7 +114,7 @@ void LcdInitt(void){
   LCD_DATA = 0x2C;
   LCD_DATA = 0x82;
   LCD_REG = 0x11;
-  LcdDelay(0x000249F0);      //120ms
+  LcdDelay(0x030000);      //120ms
   LCD_REG = 0x29;
 
   LCD_REG = 0x2A;
@@ -129,7 +129,7 @@ void LcdInitt(void){
   LCD_DATA = 0x40;
   LCD_REG = 0x2C;
 
-  uint32_t i = 0x00025800;
+  uint32_t i = 0x025800;
   while(i--){
     LCD_DATA = 0x0000;
   }
