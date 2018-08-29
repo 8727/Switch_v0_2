@@ -18,8 +18,8 @@
 
 struct Ds18b20InitTypeDef{
   uint8_t deviceID[0x08];
-  int8_t temperature;
-  uint8_t temp;
+  uint8_t temperature;
+  uint8_t fraction;
 };
 
 extern struct Ds18b20InitTypeDef ds18b20[DS18B20_MAX_DEVICES];
