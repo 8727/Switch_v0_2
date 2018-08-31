@@ -98,7 +98,7 @@ struct settingsInitTypeDef{
   uint16_t rs485Speed;
   
   
-  
+  uint8_t start;
 };
 extern struct settingsInitTypeDef settings;
 

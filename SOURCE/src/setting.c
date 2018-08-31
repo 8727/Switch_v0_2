@@ -104,4 +104,6 @@ void Setting(void){
   Ds18b20Init();
   W25QxxInit();
   W25QxxReadImgTable();
+  
+  settings.start = 0x01;
 }

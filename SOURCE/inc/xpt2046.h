@@ -14,15 +14,16 @@
 #define XPT2046_B           0xD0
 #define XPT2046_Z1          0xB0
 #define XPT2046_Z2          0xC0
-#define XPT2046_BAT         0xA0
-#define XPT2046_BRG         0xE0
+#define XPT2046_BAT         0xA4
+#define XPT2046_BRG         0xE4
 
 struct xpt2046InitTypeDef{
   uint16_t x;
   uint16_t y;
   uint16_t bat;
   uint16_t brg;
-  uint8_t start;
+  uint16_t t0;
+  uint16_t t1;
 };
 extern struct xpt2046InitTypeDef xpt2046;
 

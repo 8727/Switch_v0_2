@@ -4,9 +4,7 @@ void RTC_IRQHandler(void){
   if(RTC->CRL & RTC_CRL_SECF)
   {
     if(0x00 != ds18b20Device) Ds18b20Read();
-    if(0x00 < xpt2046.start){
-      Xpt2046TouchBatBrg();
-    }
+    if(settings.start == 0x01 && (GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046TouchBatBrg();
 //    RtcCounterToTime(RtcGetCounter());
 //    gui_mode.time_wait++;
 //    if(0xC8 < gui_mode.time_wait) gui_mode.time_wait = 0xC8; // 200 sec
