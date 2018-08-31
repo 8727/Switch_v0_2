@@ -20,6 +20,7 @@
 struct xpt2046InitTypeDef{
   uint8_t buff[0x03];
   uint8_t buffSt;
+  uint16_t temp;
   uint16_t x;
   uint16_t y;
   uint16_t bat;
