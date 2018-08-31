@@ -2,28 +2,32 @@
 
 struct xpt2046InitTypeDef xpt2046;
 
-uint8_t Xpt2046Read(uint8_t a){
-  uint8_t i;
-  while(!(SPI2->SR & SPI_SR_TXE));
-  SPI2->DR = a;
-  while(!(SPI2->SR & SPI_SR_RXNE));
-  i = SPI2->DR;
-  return i;
-}
+// uint8_t Xpt2046Read(uint8_t a){
+//   uint8_t i;
+//   while(!(SPI2->SR & SPI_SR_TXE));
+//   SPI2->DR = a;
+//   while(!(SPI2->SR & SPI_SR_RXNE));
+//   i = SPI2->DR;
+//   return i;
+// }
 
-uint16_t Xpt2046GetTouch(uint8_t adress){
-  uint16_t data = 0x00;
-  XPT2046_CS_LOW;
-  Xpt2046Read(adress);
-  Xpt2046Read(0X00);
-  Xpt2046Read(0X00);
-  Xpt2046Read(adress);
-  data = Xpt2046Read(0X00);
-  data <<= 0x08;
-  data |= Xpt2046Read(0X00);
-  data >>= 0x03;
-  XPT2046_CS_HIGHT;
-  return data;
+ void Xpt2046GetTouch(uint8_t adress){
+  SPI2->CR2 |= SPI_CR2_RXNEIE;
+  SPI2->DR = adress;
+ }
+
+void SPI2_IRQHandler(void){
+  if(SPI2->SR &= SPI_SR_RXNE){
+    xpt2046.buff[xpt2046.buffSt] = SPI2->DR;
+    xpt2046.buffSt++;
+    if(0x03 > xpt2046.buffSt){
+      SPI2->DR = 0x00;
+    }else{
+      SPI2->CR2 &= ~SPI_CR2_RXNEIE;
+      xpt2046.buffSt = 0x00;
+      xpt2046.temp = (xpt2046.buff[0x01]<< 0x08 | xpt2046.buff[0x02]);
+    }   
+  }
 }
 
 void Xpt2046TouchXY(void){
