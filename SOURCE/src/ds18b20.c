@@ -109,7 +109,7 @@ void Ds18b20SearchROM(void){
   ds18b20Device = 0x00;
   for(i = 0x00; i < DS18B20_MAX_DEVICES; i++){
     if(Ds18b20Search(rom)){
-    memcpy (ds18b20[i].deviceID, rom, sizeof(rom));
+    memcpy (ds18b20[i].deviceID, rom,sizeof(rom));
     }else break;
   }
 }
@@ -123,7 +123,7 @@ void Ds18b20Read(void){
   Ds18b20SendByte(DS18B20_READ_SCRATCHPAD);
   temp = (Ds18b20ReadByte() << 0x08) | Ds18b20ReadByte();
   ds18b20[i].temperature = ((temp & 0x0FFF) >> 0x04);
-  ds18b20[i].fraction = ((temp & 0x000F) * 0.0625);
+  ds18b20[i].fraction = ((temp & 0x000F) * 0.625);
   }
   Ds18b20Reset();
   Ds18b20SendByte(DS18B20_SKIP_ROM);
