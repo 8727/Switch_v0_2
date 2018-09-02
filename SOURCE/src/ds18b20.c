@@ -109,7 +109,7 @@ void Ds18b20SearchROM(void){
   ds18b20Device = 0x00;
   for(i = 0x00; i < DS18B20_MAX_DEVICES; i++){
     if(Ds18b20Search(rom)){
-    memcpy (ds18b20[i].deviceID, rom,sizeof(rom));
+    memcpy (ds18b20[i].deviceID, rom, sizeof(rom));
     }else break;
   }
 }

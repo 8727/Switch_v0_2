@@ -10,27 +10,39 @@
 #define XPT2046_CS_LOW      GPIOB->BRR = GPIO_BRR_BR12
 #define XPT2046_CS_HIGHT    GPIOB->BSRR = GPIO_BSRR_BS12
 
-#define XPT2046_A           0x90
-#define XPT2046_B           0xD0
-#define XPT2046_Z1          0xB0
-#define XPT2046_Z2          0xC0
-#define XPT2046_BAT         0xA4
+#define XPT2046_A           0x91
+#define XPT2046_B           0xD1
+#define XPT2046_Z1          0xB1
+#define XPT2046_Z2          0xC1
+#define XPT2046_BAT         0xA5
 #define XPT2046_BRG         0xE4
+#define XPT2046_T0          0x85
+#define XPT2046_T1          0xF5
+
+struct xpt2046ReadInitTypeDef{
+  uint8_t reads;
+  uint8_t send[0x04];
+  uint8_t read[0x03];
+  uint8_t sendStep;
+  uint8_t sendCoun;
+  uint16_t readSend[0x04];
+};
 
 struct xpt2046InitTypeDef{
-  uint8_t buff[0x03];
-  uint8_t buffSt;
-  uint16_t temp;
   uint16_t x;
   uint16_t y;
+  uint16_t z1;
+  uint16_t z2;
   uint16_t bat;
   uint16_t brg;
   uint16_t t0;
   uint16_t t1;
 };
+
+//extern struct xpt2046ReadInitTypeDef xpt2046Read;
 extern struct xpt2046InitTypeDef xpt2046;
 
-void Xpt2046TouchBatBrg(void);
+void Xpt2046GetTouch(uint8_t type);
 void Xpt2046Init(void);
 
 #endif /* _XPT2046_H */
