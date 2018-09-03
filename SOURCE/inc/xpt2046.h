@@ -17,13 +17,13 @@
 #define XPT2046_BAT         0x00A4
 #define XPT2046_BRG         0x00E4
 
-#define TOUCH_PRESSED       0x00
-#define TOUCH_RELEASED      0x01
+#define XPT2046_PRESSED     0x0000
+#define XPT2046_RELEASED    0x0001
 
 struct xpt2046ReadInitTypeDef{
   uint8_t status;
   uint8_t count;
-  uint16_t raw[0x09];
+  uint16_t raw[0x07];
   uint8_t rawCount;
 };
 

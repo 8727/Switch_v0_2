@@ -105,5 +105,6 @@ void Setting(void){
   W25QxxInit();
   W25QxxReadImgTable();
   
-  settings.start = 0x01;
+  
+  
 }
