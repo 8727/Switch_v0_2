@@ -4,8 +4,8 @@ int main(void){
   Start();
   Setting();
   while(1){
-  DelayMs(500);
-
+  DelayMs(50);
+  Xpt2046GetTouch();
   
   
   
