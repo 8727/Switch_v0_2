@@ -38,7 +38,6 @@ struct xpt2046InitTypeDef{
 
 extern struct xpt2046InitTypeDef xpt2046;
 
-void Xpt2046GetTouch(void);
 void Xpt2046Init(void);
 
 #endif /* _XPT2046_H */
