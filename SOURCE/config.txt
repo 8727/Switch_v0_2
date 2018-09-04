@@ -8,3 +8,25 @@ micro sd
 w25qxx
 buzzer
 pir
+
+AT24C02
+I2C1
+
+ILI9488
+TIM2
+FSMC
+
+XPT2046
+SPI2
+
+DHT22
+TIM4
+DMA1 Channel4
+DMA1 Channel7
+
+DS18B20
+USART3
+
+W25Q128
+SPI1
+
