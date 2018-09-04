@@ -6,6 +6,7 @@ struct xpt2046ReadInitTypeDef xpt2046Read;
 static uint16_t xpt2046Send[0x07] = {XPT2046_BAT, XPT2046_BRG, XPT2046_A, XPT2046_B, XPT2046_Z1, XPT2046_Z2, XPT2046_PRESSED};
 
 void TIM6_IRQHandler(void){
+  TIM6->SR = 0x00;
   xpt2046Read.status = XPT2046_RELEASED;
   if(GPIOB->IDR & GPIO_IDR_IDR11){
     xpt2046Read.status = XPT2046_RELEASED;
@@ -64,6 +65,7 @@ void Xpt2046Init(void){
   RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
   TIM6->PSC = 0x1F3F; // 7999
   TIM6->ARR =  0x01F3; // 499
+  TIM4->SR = 0x00;
   TIM6->DIER |= TIM_DIER_UIE;
   TIM6->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
   
