@@ -14,10 +14,10 @@
 
 
 /* Define --------------------------------------------------------------------*/
-#define NAME_BUILD              "v0.02" // 0x09, 0x0A, 0x0B, 0x0C  // v0.02
-#define DEVICE_NUMBER           0x01    // Device number
-#define RTC_CALIBRATION         0x00    // RTC CalibrationPpm
-#define CALIB_POWER_V           0x00    // CALIB_POWER_V
+#define NAME_BUILD              "v0.02"     // 0x09, 0x0A, 0x0B, 0x0C  // v0.02
+#define DEVICE_NUMBER           0x01        // Device number
+#define RTC_CALIBRATION         0x00        // RTC CalibrationPpm
+#define CALIB_POWER_V           0x00        // CALIB_POWER_V
 
 #define CAN_SPEED               0x001C0004  //0x00050004 // 1000 Kb
                                             //0x001C0004 // 500 Kb
@@ -40,20 +40,20 @@
                                             //0x0823       //38400
                                             //0x208D       //9600
 
-#define EEPROM_BUILD_DATE       0x00  // 0x00, 0x01, 0x02, 0x03  BUILD_DATE
-#define EEPROM_STATUS           0x04  // Status
-#define EEPROM_DEVICE_N         0x05  // Device number
-#define EEPROM_BUILD_TYPE       0x06  // Device type, S = switch, W = water
-#define EEPROM_CALIBRATION      0x07  // RTC CalibrationPpm
+#define EEPROM_BUILD_DATE       0x00        // 0x00, 0x01, 0x02, 0x03  BUILD_DATE
+#define EEPROM_STATUS           0x04        // Status
+#define EEPROM_DEVICE_N         0x05        // Device number
+#define EEPROM_BUILD_TYPE       0x06        // Device type, S = switch, W = water
+#define EEPROM_CALIBRATION      0x07        // RTC CalibrationPpm
 
-#define EEPROM_NAME_BUILD       0x01  // 0x08, 0x09, 0x0A, 0x0B, 0x0C  // NAME_BUILD
+#define EEPROM_NAME_BUILD       0x01        // 0x08, 0x09, 0x0A, 0x0B, 0x0C  // NAME_BUILD
 
-#define EEPROM_CALIB_POWER_V    0x0F  // CALIB_POWER_V
+#define EEPROM_CALIB_POWER_V    0x0F        // CALIB_POWER_V
 
 
-#define EEPROM_CAN_SPEED        0x03  // 0x18, 0x19, 0x1A, 0x1B
-                                      // 0x1C, 0x1D, 0x1E, 0x1F
-#define EEPROM_RS485_SPEED      0x20  // 0x21
+#define EEPROM_CAN_SPEED        0x03        // 0x18, 0x19, 0x1A, 0x1B
+                                            // 0x1C, 0x1D, 0x1E, 0x1F
+#define EEPROM_RS485_SPEED      0x20        // 0x21
  
 
 
@@ -81,7 +81,7 @@
 //#define USART_2_3_SPEED        0x00AE       //230400
 //#define USART_2_3_SPEED        0x0000       //125000
 #define USART_2_3_SPEED_1152     0x015B       //115200
-//#define USART_2_3_SPEED_1152     0x015A       //115200
+//#define USART_2_3_SPEED_1152   0x015A       //115200
 //#define USART_2_3_SPEED        0x02B6       //57600
 //#define USART_2_3_SPEED        0x0412       //38400
 //#define USART_2_3_SPEED        0x0823       //19200
@@ -96,6 +96,8 @@ struct settingsInitTypeDef{
   int8_t   calibPowerV;
   uint32_t canSpeed;
   uint16_t rs485Speed;
+  
+  uint8_t rotation;
   
   
   uint8_t start;

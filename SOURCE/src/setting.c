@@ -72,8 +72,8 @@ void ReadConfig(void){
   settings.rs485Speed = (tempReadBuff[EEPROM_RS485_SPEED] << 0x08)| tempReadBuff[EEPROM_RS485_SPEED + 0x01];
   
   
-  
-  
+  settings.rotation = 0x09;
+   
   dht22.humidity = 0xFFFF;
   dht22.temperature = 0xFFFF;
 }

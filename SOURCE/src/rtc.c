@@ -4,10 +4,13 @@ void RTC_IRQHandler(void){
   if(RTC->CRL & RTC_CRL_SECF)
   {
     if(0x00 != ds18b20Device) Ds18b20Read();
+    
+    
 //    RtcCounterToTime(RtcGetCounter());
 //    gui_mode.time_wait++;
 //    if(0xC8 < gui_mode.time_wait) gui_mode.time_wait = 0xC8; // 200 sec
 //    if(gui_mode.wait < gui_mode.time_wait) Gui_Modes();
+    
     RTC->CRL &= ~RTC_CRL_SECF;
   }
 //  if(RTC->CRL & RTC_CRL_ALRF)
@@ -18,7 +21,16 @@ void RTC_IRQHandler(void){
 //  }
 }
 
-
+void UpdateTimer(TimerTypeDef* unixTim){
+  uint32_t a, t, counter;
+  counter = RtcGetCounter();
+  t = counter % SEC_A_DAY;
+  a = ((counter + 0xA8C0) / (SEC_A_DAY >> 0x01)) + (0x00254D8B << 0x01) + 0x01;
+  a >>= 0x01;
+  unixTim->wday = a % 0x07;
+  unixTim->hour = t / 0x0E10;
+  unixTim->min = (t % 0x0E10) / 0x3C;
+}
 
 void RtcCounterToTime(uint32_t counter, RtcTypeDef* unixTim){
   uint32_t a, t;

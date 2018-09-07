@@ -1,9 +1,5 @@
 #include "ili9488.h"
 
-void LcdDelay (uint32_t timedelay){
-  while(timedelay--){}
-}
-
 #pragma O0
 void LcdInitt(void){
   GPIOA->CRH &= ~(GPIO_CRH_CNF15);
@@ -45,9 +41,9 @@ void LcdInitt(void){
   FSMC_Bank1->BTCR[0x01] = FSMC_BTR1_DATAST_0;
 
   ILI9488_RESET_LOW;
-  LcdDelay(0x04C4B4);      //25ms
+  DelayMs(0x19); // 25ms
   ILI9488_RESET_HIGHT;
-  LcdDelay(0x01E848);      //10ms
+  DelayMs(0x0A); // 10ms
 
   LCD_REG = 0xE0;
   LCD_DATA = 0x00;
@@ -100,10 +96,20 @@ void LcdInitt(void){
   LCD_REG = 0xB7;
   LCD_DATA = 0x06;
   LCD_REG = 0x36;
-//  LCD_DATA = 0x48;   //Dspl_Rotation_0_degr
-  LCD_DATA = 0x38;   //Dspl_Rotation_90_degr
-//  LCD_DATA = 0x88;   //Dspl_Rotation_180_degr
-//  LCD_DATA = 0xE8;   //Dspl_Rotation_270_degr
+  switch(settings.rotation){
+    case 0x27:
+      LCD_DATA = 0xE8; //Dspl_Rotation_270
+    break;
+    case 0x18:
+      LCD_DATA = 0x88;  //Dspl_Rotation_180
+    break;
+    case 0x09:
+      LCD_DATA = 0x38;  //Dspl_Rotation_90
+    break;
+    default:
+      LCD_DATA = 0x48;  //Dspl_Rotation_0
+    break;
+  }
   LCD_REG = 0x3A;
   LCD_DATA = 0x55;
   LCD_REG = 0xE9;
@@ -114,7 +120,7 @@ void LcdInitt(void){
   LCD_DATA = 0x2C;
   LCD_DATA = 0x82;
   LCD_REG = 0x11;
-  LcdDelay(0x030000);      //120ms
+  DelayMs(0x78); // 120ms
   LCD_REG = 0x29;
 
   LCD_REG = 0x2A;
