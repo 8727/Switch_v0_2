@@ -98,7 +98,14 @@ struct settingsInitTypeDef{
   uint16_t rs485Speed;
   
   uint8_t rotation;
-  
+  uint16_t maxX;
+  uint16_t maxY;
+  uint32_t ax;
+  uint32_t bx;
+  uint32_t cx;
+  uint32_t ay;
+  uint32_t by;
+  uint32_t cy;
   
   uint8_t start;
 };

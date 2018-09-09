@@ -20,6 +20,8 @@
 #define XPT2046_PRESSED     0x0000
 #define XPT2046_RELEASED    0x0001
 
+#define TOUCH_FACTOR        0x2710
+
 struct xpt2046ReadInitTypeDef{
   uint8_t status;
   uint8_t count;
@@ -38,6 +40,7 @@ struct xpt2046InitTypeDef{
 
 extern struct xpt2046InitTypeDef xpt2046;
 
+void Xpt2046Calibration(void);
 void Xpt2046Init(void);
 
 #endif /* _XPT2046_H */

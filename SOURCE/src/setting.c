@@ -100,6 +100,7 @@ void Setting(void){
   LcdInitt();
   TIM2->CCR1 = 0x20;
   Xpt2046Init();
+  //if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
   Dht22Init();
   Ds18b20Init();
   W25QxxInit();
