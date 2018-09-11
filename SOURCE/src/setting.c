@@ -89,9 +89,9 @@ void ReadConfig(void){
     Ee24cxxWriteByte(EEPROM_RS485_SPEED + 0x01, (uint8_t)RS485_SPEED);
     
     
-    for(uint8_t i = 0x80; i < 0xFF; i += 0x08){
-      Ee24cxxWritePage(i, 0x00, 0x08);
-    }
+//    for(uint8_t i = 0x80; i < 0xFF; i += 0x08){
+//      Ee24cxxWritePage(i, 0x00, 0x08);
+//    }
     settings.rotation = 0x09;
     
     Ee24cxxRead(0x00, tempReadBuff, 0x30);
@@ -110,7 +110,7 @@ void ReadConfig(void){
   
   
   
-  settings.rotation = tempReadBuff[0x12];
+  //settings.rotation = tempReadBuff[0x12];
   switch(settings.rotation){
     case 0x27:  //Dspl_Rotation_270
     case 0x09:  //Dspl_Rotation_90
@@ -131,7 +131,7 @@ void Setting(void){
   LcdInitt();
   TIM2->CCR1 = 0x20;
   Xpt2046Init();
-  //if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
+  if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
   Dht22Init();
   Ds18b20Init();
   W25QxxInit();
