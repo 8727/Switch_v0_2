@@ -32,6 +32,37 @@ void Start(void){
   RCC->APB2ENR |= RCC_APB2ENR_IOPGEN;
 }
 
+void CounterToBuffer(uint32_t counter, uint8_t* buff){
+  buff[0x00] = (counter >> 0x18);
+  buff[0x01] = (counter >> 0x10);
+  buff[0x02] = (counter >> 0x08);
+  buff[0x03] = counter; 
+}
+
+uint32_t BufferToCounter(uint8_t* buff){
+  uint32_t data = buff[0x00] << 0x18;
+  data |= buff[0x01] << 0x10;
+  data |= buff[0x02] << 0x08;
+  data |= buff[0x03]; 
+  return data;
+}
+
+void ReadSettingTimers(void){
+  uint8_t tempBuff[0x80];
+  uint8_t step = 0x00;
+  Ee24cxxRead(0x80, tempBuff, 0x7F);
+  for(uint8_t i = 0x00; i < 0x10; i++){
+    timesJob[i].jobActivity = tempBuff[step];
+    timesJob[i].typeChannel = tempBuff[step + 0x01];
+    timesJob[i].value = tempBuff[step + 0x02];
+    timesJob[i].wday = tempBuff[step + 0x03];
+    timesJob[i].hourOn = tempBuff[step + 0x04];
+    timesJob[i].minOn = tempBuff[step + 0x05];
+    timesJob[i].hourOff = tempBuff[step + 0x06];
+    timesJob[i].minOff = tempBuff[step + 0x07];
+    step += 0x08;
+  }
+}
 void ReadConfig(void){
   uint8_t tempReadBuff[0x30];
   uint8_t tempWriteBuff[0x08];
@@ -58,6 +89,10 @@ void ReadConfig(void){
     Ee24cxxWriteByte(EEPROM_RS485_SPEED + 0x01, (uint8_t)RS485_SPEED);
     
     
+    for(uint8_t i = 0x80; i < 0xFF; i += 0x08){
+      Ee24cxxWritePage(i, 0x00, 0x08);
+    }
+    settings.rotation = 0x09;
     
     Ee24cxxRead(0x00, tempReadBuff, 0x30);
   }
@@ -72,25 +107,21 @@ void ReadConfig(void){
   settings.rs485Speed = (tempReadBuff[EEPROM_RS485_SPEED] << 0x08)| tempReadBuff[EEPROM_RS485_SPEED + 0x01];
   
   
-  settings.rotation = 0x09;
-   
-  dht22.humidity = 0xFFFF;
-  dht22.temperature = 0xFFFF;
-}
-
-void CounterToBuffer(uint32_t counter, uint8_t* buff){
-  buff[0x00] = (counter >> 0x18);
-  buff[0x01] = (counter >> 0x10);
-  buff[0x02] = (counter >> 0x08);
-  buff[0x03] = counter; 
-}
-
-uint32_t BufferToCounter(uint8_t* buff){
-  uint32_t data = buff[0x00] << 0x18;
-  data |= buff[0x01] << 0x10;
-  data |= buff[0x02] << 0x08;
-  data |= buff[0x03]; 
-  return data;
+  
+  
+  
+  settings.rotation = tempReadBuff[0x12];
+  switch(settings.rotation){
+    case 0x27:  //Dspl_Rotation_270
+    case 0x09:  //Dspl_Rotation_90
+      settings.maxX = 0x01DF; 
+      settings.maxY = 0x013F;
+    break; 
+    default:  //Dspl_Rotation_0 Rotation_180
+      settings.maxX = 0x013F; 
+      settings.maxY = 0x01DF;
+    break;
+  }
 }
 
 void Setting(void){
@@ -105,7 +136,7 @@ void Setting(void){
   Ds18b20Init();
   W25QxxInit();
   W25QxxReadImgTable();
-  TimersInit();
+  ReadSettingTimers();
   
   
 }

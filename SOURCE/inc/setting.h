@@ -11,7 +11,7 @@
 #include "dht22.h"
 #include "ds18b20.h"
 #include "w25qxx.h"
-#include "timer.h"
+#include "timers.h"
 
 
 /* Define --------------------------------------------------------------------*/

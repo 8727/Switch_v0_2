@@ -1,26 +1,26 @@
-#ifndef _TIMER_H
-#define _TIMER_H
+#ifndef _TIMERS_H
+#define _TIMERS_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "setting.h"
-//#include "rtc.h"
 
 
 /* Define --------------------------------------------------------------------*/
 
-typedef struct{
-  uint8_t activity;
-  uint8_t type;
+struct TimersTypeDef{
+  uint8_t jobActivity;
+  uint8_t typeChannel;
   uint8_t value;
   uint8_t wday;      /* 0..6 (Sun..Sat) */
   uint8_t hourOn;    /* 0..23 */
   uint8_t minOn;     /* 0..59 */
   uint8_t hourOff;   /* 0..23 */
   uint8_t minOff;    /* 0..59 */
-}TimersTypeDef;
+};
 
-void TimersInit(void);
+extern struct TimersTypeDef timesJob[0x10];
+
 void TimersMatch(void);
 
-#endif /* _TIMER_H */
+#endif /* _TIMERS_H */
