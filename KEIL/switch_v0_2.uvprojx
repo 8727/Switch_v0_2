@@ -461,6 +461,11 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\can.c</FilePath>
             </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\timer.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

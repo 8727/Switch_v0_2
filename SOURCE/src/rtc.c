@@ -10,7 +10,7 @@ void RTC_IRQHandler(void){
 //    gui_mode.time_wait++;
 //    if(0xC8 < gui_mode.time_wait) gui_mode.time_wait = 0xC8; // 200 sec
 //    if(gui_mode.wait < gui_mode.time_wait) Gui_Modes();
-    
+    TimersMatch();
     RTC->CRL &= ~RTC_CRL_SECF;
   }
 //  if(RTC->CRL & RTC_CRL_ALRF)
