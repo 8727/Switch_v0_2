@@ -11,7 +11,7 @@
 
 typedef struct{
   uint8_t activity;
-  uint8_t b;
+  uint8_t type;
   uint8_t value;
   uint8_t wday;      /* 0..6 (Sun..Sat) */
   uint8_t hourOn;    /* 0..23 */
