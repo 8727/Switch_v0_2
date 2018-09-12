@@ -97,16 +97,15 @@ struct settingsInitTypeDef{
   int8_t   calibPowerV;
   uint32_t canSpeed;
   uint16_t rs485Speed;
-  
+  // LCD
   uint8_t rotation;
   uint16_t maxX;
   uint16_t maxY;
-  uint32_t ax;
-  uint32_t ay;
+  uint8_t ax;
+  uint8_t ay;
   int16_t bx;
   int16_t by;
   
-  uint8_t start;
 };
 extern struct settingsInitTypeDef settings;
 

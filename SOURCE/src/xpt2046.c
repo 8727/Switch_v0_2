@@ -31,9 +31,13 @@ void SPI2_IRQHandler(void){
       xpt2046.brg = xpt2046Read.raw[0x02] * 0.0245;
       if(0x04 < xpt2046Read.count){
         xpt2046Read.status = XPT2046_PRESSED;
-        xpt2046Read.raw[0x03] = 0x0FFF - xpt2046Read.raw[0x03];  //X
-        xpt2046.x = xpt2046Read.raw[0x03] / (settings.ax / TOUCH_FACTOR) + settings.bx;
-        xpt2046.y = xpt2046Read.raw[0x04] / (settings.ay / TOUCH_FACTOR) + settings.by;
+        xpt2046Read.raw[0x03] = 0x0FFF - xpt2046Read.raw[0x03];
+        xpt2046.x = xpt2046Read.raw[0x03] / settings.ax + settings.bx;
+        xpt2046.y = xpt2046Read.raw[0x04] / settings.ay + settings.by;
+        if(0x00 > xpt2046.x) xpt2046.x = 0x00;
+        if(0x00 > xpt2046.y) xpt2046.y = 0x00;
+        if(settings.maxX < xpt2046.x) xpt2046.x = settings.maxX;
+        if(settings.maxY < xpt2046.y) xpt2046.y = settings.maxY;
       }else{
         xpt2046Read.status = XPT2046_RELEASED;
       }
@@ -66,17 +70,15 @@ void Xpt2046Calibration(void){
   for(i = 0x00; i < 0x04; i++){
     GuiCalibDraw(drawX[i], drawY[i]);
     while(xpt2046Read.status){}
+    while(!xpt2046Read.status){}
     touchX[i] = xpt2046Read.raw[0x03];
     touchY[i] = xpt2046Read.raw[0x04];
-    while(!xpt2046Read.status){}
     GuiCalibErase(drawX[i], drawY[i]);
   }
-  settings.ax = (float)(touchX[0x03] - touchX[0x00]) / (drawX[0x03] - drawX[0x00]);
+  settings.ax = (touchX[0x02] - touchX[0x00]) / (drawX[0x02] - drawX[0x00]);
   settings.bx = drawX[0x00] - touchX[0x00] / settings.ax;
-  settings.ay = (float)(touchY[0x03] - touchY[0x00]) / (drawY[0x03] - drawY[0x00]);
+  settings.ay = (touchY[0x02] - touchY[0x00]) / (drawY[0x02] - drawY[0x00]);
   settings.by = drawY[0x00] - touchY[0x00] / settings.ay;
-  settings.ax = settings.ax * TOUCH_FACTOR;
-  settings.ay = settings.ay * TOUCH_FACTOR;
   
   GuiSetWindow(0x00, 0x00, settings.maxX, settings.maxY);
   GuiFullWindow(BLACK);

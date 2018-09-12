@@ -20,8 +20,6 @@
 #define XPT2046_PRESSED     0x0000
 #define XPT2046_RELEASED    0x0001
 
-#define TOUCH_FACTOR        0x98968
-
 struct xpt2046ReadInitTypeDef{
   uint8_t status;
   uint8_t count;
@@ -30,8 +28,8 @@ struct xpt2046ReadInitTypeDef{
 };
 
 struct xpt2046InitTypeDef{
-  uint16_t x;
-  uint16_t y;
+  int16_t x;
+  int16_t y;
   uint16_t bat;
   uint16_t brg;
 };

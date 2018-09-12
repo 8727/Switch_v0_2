@@ -122,10 +122,10 @@ void ReadConfig(void){
       settings.maxY = 0x01E0;
     break;
   }
-  settings.ax = 0xFF676980;
-  settings.ay = 0x05F5E100;
-  settings.bx = 0x003C;
-  settings.by = 0xFFBE;
+  settings.ax = 0x07;
+  settings.ay = 0x0A;
+  settings.bx = 0x0005;
+  settings.by = 0xFFBD;
 }
 
 void Setting(void){
