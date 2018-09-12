@@ -26,9 +26,9 @@ void GuiCalibDraw(uint16_t x, uint16_t y){
     c = calibDraw[i];
     for(uint8_t z = 0x00; z < 0x20; z++){
       if(c & 0x80000000){
-        LCD_DATA = WHITE;
-      }else{
         LCD_DATA = BLACK;
+      }else{
+        LCD_DATA = WHITE;
       }
       c <<= 0x01;
     }
@@ -39,7 +39,7 @@ void GuiCalibErase(uint16_t x, uint16_t y){
   GuiSetWindow(x - 0x0F, y - 0x0F, 0x20, 0x20);
   uint16_t i = 0x0400;
   while(i--){
-    LCD_DATA = 0x0000;
+    LCD_DATA = WHITE;
   }
 }
 

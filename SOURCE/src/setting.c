@@ -110,7 +110,7 @@ void ReadConfig(void){
   
   
   
-  //settings.rotation = tempReadBuff[0x12];
+  settings.rotation = 0x09;
   switch(settings.rotation){
     case 0x27:  //Dspl_Rotation_270
     case 0x09:  //Dspl_Rotation_90
@@ -122,6 +122,10 @@ void ReadConfig(void){
       settings.maxY = 0x01E0;
     break;
   }
+  settings.ax = 0xFF676980;
+  settings.ay = 0x05F5E100;
+  settings.bx = 0x003C;
+  settings.by = 0xFFBE;
 }
 
 void Setting(void){
@@ -129,7 +133,6 @@ void Setting(void){
   ReadConfig();
   RtcInit();
   LcdInitt();
-  TIM2->CCR1 = 0x20;
   Xpt2046Init();
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
   Dht22Init();
@@ -138,5 +141,5 @@ void Setting(void){
   W25QxxReadImgTable();
   ReadSettingTimers();
   
-  
+  TIM2->CCR1 = 0x20;
 }
