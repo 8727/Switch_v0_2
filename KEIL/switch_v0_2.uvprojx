@@ -466,6 +466,11 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\timers.c</FilePath>
             </File>
+            <File>
+              <FileName>gui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\gui.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

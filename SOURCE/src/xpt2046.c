@@ -44,48 +44,6 @@ void SPI2_IRQHandler(void){
   }
 }
 
-void Xpt2046CalibSet(uint16_t x, uint16_t y){
-  uint16_t x1 = x - 0x0F;
-  uint16_t y1 = y - 0x0F;
-  uint16_t x2 = x + 0x10;
-  uint16_t y2 = y + 0x10;
-  LCD_REG = 0x2A;
-  LCD_DATA = x1 >> 0x08;
-  LCD_DATA = x1;
-  LCD_DATA = x2 >> 0x8;
-  LCD_DATA = x2;
-  LCD_REG = 0x2B;
-  LCD_DATA = y1 >> 0x08;
-  LCD_DATA = y1;
-  LCD_DATA = y2 >> 0x08;
-  LCD_DATA = y2;
-  LCD_REG = 0x2C;
-}
-
-void Xpt2046CalibDraw(uint16_t x, uint16_t y){
-  uint32_t c;
-  Xpt2046CalibSet(x,y);
-  for(uint8_t i = 0x00; i < 0x20; i++){
-    c = calibDraw[i];
-    for(uint8_t z = 0x00; z < 0x20; z++){
-      if(c & 0x80000000){
-        LCD_DATA = WHITE;
-      }else{
-        LCD_DATA = BLACK;
-      }
-      c <<= 0x01;
-    }
-  }
-}
-
-void Xpt2046CalibErase(uint16_t x, uint16_t y){
-  Xpt2046CalibSet(x,y);
-  uint16_t i = 0x0400;
-  while(i--){
-    LCD_DATA = 0x0000;
-  }
-}
-
 void Xpt2046Calibration(void){
   uint16_t drawX[0x05];
   uint16_t drawY[0x05];
@@ -94,29 +52,33 @@ void Xpt2046Calibration(void){
   double ka[0x03], kb[0x03], kc[0x03], kd[0x03];
   double d, dx1, dx2, dx3, dy1, dy2, dy3;
   uint8_t i;
+  uint16_t z;
   // Устанавливаем координаты пяти точек, по которым будет производится калибровка экрана
   drawX[0x00] = (settings.maxX / 0x02);
-  drawX[0x01] = 0x01 * (settings.maxX / 0x05);
-  drawX[0x02] = 0x04 * (settings.maxX / 0x05);
-  drawX[0x03] = 0x04 * (settings.maxX / 0x05);
-  drawX[0x04] = 0x01 * (settings.maxX / 0x05);
+  z = (settings.maxX / 0x05);
+  drawX[0x01] = 0x01 * z;
+  drawX[0x02] = 0x04 * z;
+  drawX[0x03] = 0x04 * z;
+  drawX[0x04] = 0x01 * z;
   drawY[0x00] = (settings.maxY / 0x02);
-  drawY[0x01] = 0x01 * (settings.maxY / 0x05);
-  drawY[0x02] = 0x01 * (settings.maxY / 0x05);
-  drawY[0x03] = 0x04 * (settings.maxY / 0x05);
-  drawY[0x04] = 0x04 * (settings.maxY / 0x05);
+  z = (settings.maxY / 0x05);
+  drawY[0x01] = 0x01 * z;
+  drawY[0x02] = 0x01 * z;
+  drawY[0x03] = 0x04 * z;
+  drawY[0x04] = 0x04 * z;
    // Поочередно выводим перекрестье для каждой из пяти точек и считываем координаты нажатия
+  DelayMs(200);
   while(!xpt2046Read.status){} // Ожидаем отпускания нажатия на сенсорный экран
   TIM2->CCR1 = 0xFF;
   for(i = 0x00; i < 0x05; i++){
-    Xpt2046CalibDraw(drawX[i], drawY[i]); // Выводим перекрестье
+    GuiCalibDraw(drawX[i], drawY[i]); // Выводим перекрестье
     while(xpt2046Read.status){} // Ожидаем нажатия на сенсорный экран
     touchX[i] = xpt2046Read.raw[0x03];
     touchY[i] = xpt2046Read.raw[0x04];
     while(!xpt2046Read.status){} // Ожидаем отпускания нажатия на сенсорный экран
-    Xpt2046CalibErase(drawX[i], drawY[i]); // Выводим перекрестье
+    GuiCalibErase(drawX[i], drawY[i]); // Выводим перекрестье
   }
-  for(i = 0x00; i < 0x03; i++){   // Производим расчёты
+  for(i = 0x00; i < 0x03; i++){  // Производим расчёты
     ka[i] = 0x00; 
     kb[i] = 0x00; 
     kc[i] = 0x00; 
@@ -196,5 +158,4 @@ void Xpt2046Init(void){
   
   NVIC_SetPriority(TIM6_IRQn, PRIORITY_XPT2046);
   NVIC_EnableIRQ(TIM6_IRQn);
-  
 }

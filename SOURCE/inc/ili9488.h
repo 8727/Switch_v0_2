@@ -4,6 +4,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "setting.h"
+#include "gui.h"
 
 /* Define --------------------------------------------------------------------*/
 #define ILI9488_RESET_LOW         GPIOD->BRR = GPIO_BRR_BR3

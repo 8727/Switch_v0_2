@@ -114,12 +114,12 @@ void ReadConfig(void){
   switch(settings.rotation){
     case 0x27:  //Dspl_Rotation_270
     case 0x09:  //Dspl_Rotation_90
-      settings.maxX = 0x01DF; 
-      settings.maxY = 0x013F;
+      settings.maxX = 0x01E0; 
+      settings.maxY = 0x0140;
     break; 
     default:  //Dspl_Rotation_0 Rotation_180
-      settings.maxX = 0x013F; 
-      settings.maxY = 0x01DF;
+      settings.maxX = 0x0140; 
+      settings.maxY = 0x01E0;
     break;
   }
 }
