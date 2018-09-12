@@ -50,15 +50,15 @@ void Xpt2046CalibSet(uint16_t x, uint16_t y){
   uint16_t x2 = x + 0x10;
   uint16_t y2 = y + 0x10;
   LCD_REG = 0x2A;
-  LCD_DATA = y1 >> 0x08;
-  LCD_DATA = y1;
-  LCD_DATA = y2 >> 0x8;
-  LCD_DATA = y2;
-  LCD_REG = 0x2B;
   LCD_DATA = x1 >> 0x08;
   LCD_DATA = x1;
-  LCD_DATA = x2 >> 0x08;
+  LCD_DATA = x2 >> 0x8;
   LCD_DATA = x2;
+  LCD_REG = 0x2B;
+  LCD_DATA = y1 >> 0x08;
+  LCD_DATA = y1;
+  LCD_DATA = y2 >> 0x08;
+  LCD_DATA = y2;
   LCD_REG = 0x2C;
 }
 
@@ -68,10 +68,10 @@ void Xpt2046CalibDraw(uint16_t x, uint16_t y){
   for(uint8_t i = 0x00; i < 0x20; i++){
     c = calibDraw[i];
     for(uint8_t z = 0x00; z < 0x20; z++){
-      if(c & 0x80){
-        LCD_DATA = RED;
+      if(c & 0x80000000){
+        LCD_DATA = WHITE;
       }else{
-        LCD_DATA  = BLACK;
+        LCD_DATA = BLACK;
       }
       c <<= 0x01;
     }
@@ -106,6 +106,8 @@ void Xpt2046Calibration(void){
   drawY[0x03] = 0x04 * (settings.maxY / 0x05);
   drawY[0x04] = 0x04 * (settings.maxY / 0x05);
    // Поочередно выводим перекрестье для каждой из пяти точек и считываем координаты нажатия
+  while(!xpt2046Read.status){} // Ожидаем отпускания нажатия на сенсорный экран
+  TIM2->CCR1 = 0xFF;
   for(i = 0x00; i < 0x05; i++){
     Xpt2046CalibDraw(drawX[i], drawY[i]); // Выводим перекрестье
     while(xpt2046Read.status){} // Ожидаем нажатия на сенсорный экран
@@ -160,6 +162,7 @@ void Xpt2046Calibration(void){
   settings.ay = (uint32_t)(dy1 * TOUCH_FACTOR);
   settings.by = (uint32_t)(dy2 * TOUCH_FACTOR);
   settings.cy = (uint32_t)(dy3 * TOUCH_FACTOR);
+  TIM2->CCR1 = 0x20;
 }
 
 void Xpt2046Init(void){
