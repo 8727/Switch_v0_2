@@ -138,7 +138,6 @@ void Setting(void){
   Dht22Init();
   Ds18b20Init();
   W25QxxInit();
-  W25QxxReadImgTable();
   ReadSettingTimers();
   
   TIM2->CCR1 = 0x20;

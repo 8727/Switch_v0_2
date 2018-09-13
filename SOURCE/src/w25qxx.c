@@ -124,4 +124,17 @@ void W25QxxInit(void){
       w25qxx.name = "XXXXXXXXX";
     break;
   }
+  W25QxxReadImgTable();
+  
+  RCC->AHBENR |= RCC_AHBENR_DMA1EN;
+  DMA1_Channel2->CCR = 0x00;
+  DMA1_Channel2->CMAR = (uint32_t) 0x60020000;
+  DMA1_Channel2->CPAR = (uint32_t) &SPI1->DR;
+  DMA1_Channel2->CNDTR = 0x025800;
+  DMA1_Channel2->CCR = DMA_CCR2_PL | DMA_CCR2_MSIZE_0 | DMA_CCR4_PSIZE_0 ;
+  
+  
+  
+  
+  
 }
