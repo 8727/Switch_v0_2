@@ -133,11 +133,13 @@ void Setting(void){
   ReadConfig();
   RtcInit();
   LcdInitt();
+  TIM2->CCR1 = 0xFF;
   Xpt2046Init();
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
+  W25QxxInit();
   Dht22Init();
   Ds18b20Init();
-  W25QxxInit();
+  
   ReadSettingTimers();
   
   TIM2->CCR1 = 0x20;

@@ -1,6 +1,7 @@
 #include "w25qxx.h"
 
 struct w25qxxInitTypeDef w25qxx;
+struct TableInitTypeDef gui[0x0100];
 
 uint8_t W25QxxWriteRead(uint8_t byte){
   while(!(SPI1->SR & SPI_SR_TXE));
@@ -65,11 +66,29 @@ void W25QxxWritePage(uint16_t page, uint8_t *buff){
   W25QxxWriteOff();
 }
 
-void W25QxxReadImgTable(void){
-  uint8_t buff[0x0100];
-  W25QxxReadPage(0x0000, buff);
-  for(uint16_t i = 0x00; i < 0x0100; i++)
-    w25qxx.imgtable[i] = buff[i];
+void W25QxxReadTable(void){
+  uint16_t i;
+  W25Qxx_CS_LOW;
+  W25QxxWriteRead(CMD_FAST_READ);
+  W25QxxWriteRead(0x00);
+  W25QxxWriteRead(0x00);
+  W25QxxWriteRead(0x00);
+  W25QxxWriteRead(0x00);
+  for(i = 0x00; i < 0x0100; i++){
+    gui[i].address = W25QxxWriteRead(0x00) << 0x08;
+    gui[i].address |= W25QxxWriteRead(0x00);
+    gui[i].width = W25QxxWriteRead(0x00) << 0x08;
+    gui[i].width |= W25QxxWriteRead(0x00);
+    gui[i].height = W25QxxWriteRead(0x00) << 0x08;
+    gui[i].height |= W25QxxWriteRead(0x00);
+    gui[i].type = W25QxxWriteRead(0x00);
+    gui[i].pictures = W25QxxWriteRead(0x00);
+    gui[i].fps = W25QxxWriteRead(0x00);
+    gui[i].a = W25QxxWriteRead(0x00);
+    gui[i].b = W25QxxWriteRead(0x00);
+    gui[i].c = W25QxxWriteRead(0x00);
+  }
+  W25Qxx_CS_HIGHT;
 }
 
 void W25QxxInit(void){
@@ -124,17 +143,25 @@ void W25QxxInit(void){
       w25qxx.name = "XXXXXXXXX";
     break;
   }
-  W25QxxReadImgTable();
-  
-  RCC->AHBENR |= RCC_AHBENR_DMA1EN;
-  DMA1_Channel2->CCR = 0x00;
-  DMA1_Channel2->CMAR = (uint32_t) 0x60020000;
-  DMA1_Channel2->CPAR = (uint32_t) &SPI1->DR;
-  DMA1_Channel2->CNDTR = 0x025800;
-  DMA1_Channel2->CCR = DMA_CCR2_PL | DMA_CCR2_MSIZE_0 | DMA_CCR4_PSIZE_0 ;
-  
-  
-  
-  
-  
+  W25QxxReadTable();
+  GuiLoadImg(0x00, 0x00, 0x00);
+}
+
+void GuiLoadImg(uint16_t x, uint16_t y, uint8_t numb){
+  uint32_t pixel = gui[numb].width * gui[numb].height;
+  GuiSetWindow(x, y, gui[numb].width, gui[numb].height);
+  W25Qxx_CS_LOW;
+  W25QxxWriteRead(CMD_FAST_READ);
+  W25QxxWriteRead(gui[numb].address >> 0x08);
+  W25QxxWriteRead(gui[numb].address & 0x00FF);
+  W25QxxWriteRead(0x00);
+  W25QxxWriteRead(0x00);
+  SPI1->CR1 |= SPI_CR1_DFF;
+  while(pixel--){
+    SPI1->DR = 0x0000;
+    while(!(SPI1->SR & SPI_SR_RXNE));
+    LCD_DATA = SPI1->DR;
+  }
+  SPI1->CR1 &= ~SPI_CR1_DFF;
+  W25Qxx_CS_HIGHT;
 }

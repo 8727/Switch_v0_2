@@ -37,16 +37,28 @@
 struct w25qxxInitTypeDef{
   uint8_t  id;
   char     *name;
-  uint8_t  imgtable[0x100];
+};
+
+struct TableInitTypeDef{
+  uint16_t address;
+  uint16_t width;
+  uint16_t height;
+  uint8_t  type;
+  uint8_t  pictures;
+  uint8_t  fps;
+  uint8_t  a;
+  uint8_t  b;
+  uint8_t  c;
 };
 
 extern struct w25qxxInitTypeDef w25qxx;
-
+extern struct TableInitTypeDef gui[0x0100];
 
 void W25QxxErase(void);
 void W25QxxReadPage(uint16_t page, uint8_t *buff);
 void W25QxxWritePage(uint16_t page, uint8_t *buff);
-void W25QxxReadImgTable(void);
+void W25QxxReadTable(void);
 void W25QxxInit(void);
 
+void GuiLoadImg(uint16_t x, uint16_t y, uint8_t numb);
 #endif /* _W25QXX_H */
