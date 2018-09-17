@@ -471,6 +471,11 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\gui.c</FilePath>
             </File>
+            <File>
+              <FileName>ws2811.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\ws2811.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
