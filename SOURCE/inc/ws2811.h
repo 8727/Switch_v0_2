@@ -6,13 +6,12 @@
 
 
 /* Define --------------------------------------------------------------------*/
-#define LEDS_RGB    50
-#define LEDS_W      0x0A
-#define COLRS       0x03
-#define SEGMENTS    0x03
+#define LEDS_RGB         0x32
+#define LEDS_W           0x0A
+#define LEDS_SEGMENTS    0x03
 
-#define LED_LOW     0x03
-#define LED_HIGHT   0x03
+#define LED_LOW          0x20
+#define LED_HIGHT        0x40
 
 //struct Ws2811InitTypeDef{
 //  uint16_t dataBuff[0x2A];
