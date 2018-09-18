@@ -30,28 +30,39 @@ void LEDstrip_init(void){
   
   GPIOA->CRL &= ~(GPIO_CRL_CNF0 | GPIO_CRL_CNF1 | GPIO_CRL_CNF2 | GPIO_CRL_CNF3);
   GPIOA->CRL |= GPIO_CRL_MODE0 | GPIO_CRL_MODE1 | GPIO_CRL_MODE2 | GPIO_CRL_MODE3;
-  GPIOA->CRL |= GPIO_CRL_CNF0_1 | GPIO_CRL_CNF1_1 | GPIO_CRL_CNF2_1 | GPIO_CRL_CNF3_1;
+  GPIOA->CRL |= GPIO_CRL_CNF2_1 | GPIO_CRL_CNF3_1;
+  
+  RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
+  TIM5->PSC = 0x00;
+  TIM5->ARR = 99;
+  TIM5->CCR3 = 0x00;
+  TIM5->CCR4 = 0x00;
+  TIM5->CCMR1 |= TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1PE;
+  TIM5->DIER = TIM_DIER_CC3DE;
+  TIM5->DIER = TIM_DIER_CC4DE;
+  TIM5->CR1 = TIM_CR1_ARPE | TIM_CR1_CEN;
+  
+  
+  
+  
+  
+  
   
   RCC->AHBENR |= RCC_AHBENR_DMA2EN;
-  
-  RCC->APB1RSTR |= RCC_APB1RSTR_TIM5RST;    // Сброс таймера 4
-  RCC->APB1RSTR &= RCC_APB1RSTR_TIM5RST;   
-  RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;     // Разрешаем тактирование таймера 4
-  TIM5->CR1 = BIT(7);          //  1: TIMx_ARR register is buffered.
-  TIM5->CR2 = 0x00;               
-  TIM5->PSC = 0x00;               // Предделитель генерирует частоту 72 МГц
-  TIM5->ARR = 0x63;          // Перегрузка таймера каждые 1.25 мкс
-  TIM5->CCMR2 = 0x00
-               + LSHIFT(6, 4) // OC3M: Output compare 3 mode | 110: PWM mode 1 - In upcounting, channel 1 is active as long as TIMx_CNT<TIMx_CCR1 else inactive.
-               + LSHIFT(1, 3) // OC3PE: Output compare 3 preload enable
-               + LSHIFT(0, 0) // CC3S: Capture/Compare 3 selection | 00: CC3 channel is configured as output
-  ; 
-  TIM5->CNT = 0;
-  TIM5->CCR3 = 0;
-  TIM5->DIER = BIT(11);        // Bit 11 CC3DE: Capture/Compare 3 DMA request enable. Разрешаем запросы DMA
-  TIM5->CR1 |= BIT(0);         // Запускаем таймер
-  TIM5->CCER = BIT(8);         // Разрешаем работы выхода, чтобы возникали сигналы для DMA
-  
+ // зазадем адрес приемника данных
+ DMA2_Channel1->CPAR = (uint32_t) &TIM5->CCR4;
+ // задаем адрес источника данных
+ DMA2_Channel1->CMAR = (uint32_t) &ws2811RGB[0x00];
+ // указываем число пересылаемых данных
+ DMA2_Channel1->CNDTR = DMA_BUFF_SIZE;
+ // разрешаем работу + режим
+ DMA2_Channel1->CCR|= DMA_CCR1_MINC|     // инкремент памяти
+       DMA_CCR1_DIR |     // направление передачи данных (из памяти в периферию)
+       DMA_CCR1_CIRC |    // Режим цикличности
+          DMA_CCR1_PSIZE_0 | // Размер данных периферии  16 бит
+                      DMA_CCR1_MSIZE_0 | // Размер данных в памяти   16 бит
+       DMA_CCR1_TCIE  ;   // РАзрешаем прерывание по окончанию передачи
+ //DMA_CCR1_EN;
   
   
   
