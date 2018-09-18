@@ -140,6 +140,8 @@ void Setting(void){
   Dht22Init();
   Ds18b20Init();
   
+  LEDstrip_init();
+  
   ReadSettingTimers();
   
   TIM2->CCR1 = 0x20;
