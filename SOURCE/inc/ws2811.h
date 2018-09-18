@@ -7,8 +7,8 @@
 
 /* Define --------------------------------------------------------------------*/
 #define LEDS_RGB         0x32
-#define LEDS_W           0x03
-#define LEDS_SEGMENTS    0x03
+#define LEDS_W           0x09
+#define RGB              0x03
 
 #define LED_LOW          0x20
 #define LED_HIGHT        0x40
