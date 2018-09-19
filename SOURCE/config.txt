@@ -1,6 +1,6 @@
 i2с работа с сонфигами
 управление теном
-управление освещением
+ws2811 ok управление освещением
 usart rs485
 can
 micro sd
@@ -17,10 +17,10 @@ FSMC
 
 XPT2046
 SPI2
-TIM6 //50ms
+TIM6 //50ms 20 hz
 
 DHT22
-TIM4 //2s
+TIM4 //2s 0.5 hz
 DMA1 Channel4
 DMA1 Channel7
 
@@ -30,6 +30,10 @@ USART3
 W25Q128
 SPI1
 
+WS2811
+TIM5 //  1.25µs 800 000 hz
+DMA1 Channel1
+DMA1 Channel2
 
 
 
