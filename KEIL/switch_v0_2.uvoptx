@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>23</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134225004</Address>
+          <Address>134225020</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -195,7 +195,7 @@
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ws2811wDMA</ItemText>
+          <ItemText>ws2811W</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

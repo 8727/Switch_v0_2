@@ -14,8 +14,10 @@
 
 struct LightingInitTypeDef{
   uint8_t counter;
-  uint8_t ch1;
-  uint8_t ch2;
+  uint8_t countCH1;
+  uint8_t countCH2;
+  uint8_t mode;
+  
 };
 
 extern struct LightingInitTypeDef lighting;

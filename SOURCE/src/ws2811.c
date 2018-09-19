@@ -52,15 +52,15 @@ void Ws2811Init(void){
   TIM5->DIER = TIM_DIER_CC3DE | TIM_DIER_CC4DE;
   TIM5->CCER = TIM_CCER_CC3E | TIM_CCER_CC4E;
   
-  ws2811W[0x00] = BKP->DR1;
-  ws2811W[0x01] = BKP->DR2;
-  ws2811W[0x02] = BKP->DR3;
-  ws2811W[0x03] = BKP->DR4;
-  ws2811W[0x04] = BKP->DR5;
-  ws2811W[0x05] = BKP->DR6;
-  ws2811W[0x06] = BKP->DR7;
-  ws2811W[0x07] = BKP->DR8;
-  ws2811W[0x08] = BKP->DR9;
+  ws2811W[0x00] = BKP->DR2;
+  ws2811W[0x01] = BKP->DR3;
+  ws2811W[0x02] = BKP->DR4;
+  ws2811W[0x03] = BKP->DR5;
+  ws2811W[0x04] = BKP->DR6;
+  ws2811W[0x05] = BKP->DR7;
+  ws2811W[0x06] = BKP->DR8;
+  ws2811W[0x07] = BKP->DR9;
+  ws2811W[0x08] = BKP->DR10;
   Ws2811WUpdate();
   
   uint8_t i, j, k;

@@ -5,16 +5,20 @@ struct LightingInitTypeDef lighting;
 void TIM7_IRQHandler(void){
   TIM7->SR &= ~TIM_SR_UIF;
   lighting.counter++;
-  if(lighting.counter >= lighting.ch1){
+  if(lighting.counter >= lighting.countCH1){
     LED_CH1_LOW;
   }else{
     LED_CH1_HIGHT;
   }
-  if(lighting.counter >= lighting.ch2){
+  if(lighting.counter >= lighting.countCH2){
     LED_CH2_LOW;
   }else{
     LED_CH2_HIGHT;
   }
+  
+  
+  
+  
 }
 
 void BrighetInit(void){
@@ -28,8 +32,8 @@ void BrighetInit(void){
   TIM7->DIER |= TIM_DIER_UIE;
   TIM7->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
   
-  lighting.ch1 = 0x40;
-  lighting.ch2 = 0xC0;
+  lighting.countCH1 = 0x40;
+  lighting.countCH2 = 0xC0;
   
   NVIC_SetPriority(TIM7_IRQn, PRIORITY_BRIGHET);
   NVIC_EnableIRQ(TIM7_IRQn);
