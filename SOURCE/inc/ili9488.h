@@ -13,6 +13,6 @@
 #define LCD_DATA                  *(uint16_t *) (0x60020000)
 #define LCD_REG                   *(uint16_t *) (0x60000000)
 
-void LcdInitt(void);
+void LcdInit(void);
 
 #endif /* _ILI9488_H */

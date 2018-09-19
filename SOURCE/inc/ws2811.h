@@ -10,11 +10,11 @@
 #define LEDS_W           0x09
 #define RGB              0x03
 
-#define LED_LOW          0x20
-#define LED_HIGHT        0x40
+#define LED_LOW          0x14
+#define LED_HIGHT        0x30
 
 void Ws2811WUpdate(void);
 void Ws2811RGBUpdate(void);
-void LEDstrip_init(void);
+void Ws2811Init(void);
 
 #endif /* _WS2811_H */

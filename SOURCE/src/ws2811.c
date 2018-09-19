@@ -26,7 +26,7 @@ void Ws2811RGBUpdate(void){
   }
 }
 
-void LEDstrip_init(void){
+void Ws2811Init(void){
   GPIOA->CRL &= ~(GPIO_CRL_CNF2 | GPIO_CRL_CNF3);
   GPIOA->CRL |= GPIO_CRL_MODE2 | GPIO_CRL_MODE3;
   GPIOA->CRL |= GPIO_CRL_CNF2_1 | GPIO_CRL_CNF3_1;
@@ -35,15 +35,12 @@ void LEDstrip_init(void){
   DMA2_Channel1->CPAR = (uint32_t) &TIM5->CCR4;
   DMA2_Channel1->CMAR = (uint32_t) &ws2811rgbDMA[0x00];
   DMA2_Channel1->CNDTR = (LEDS_RGB + 0x02) * RGB * 0x08;
-  DMA2_Channel1->CCR |= DMA_CCR1_MINC | DMA_CCR1_DIR | DMA_CCR1_PSIZE_0; 
-  //DMA_CCR1_CIRC | 
+  DMA2_Channel1->CCR |= DMA_CCR1_MINC | DMA_CCR1_DIR | DMA_CCR1_PSIZE_0 |DMA_CCR1_CIRC; 
   
   DMA2_Channel2->CPAR = (uint32_t) &TIM5->CCR3;
   DMA2_Channel2->CMAR = (uint32_t) &ws2811wDMA[0x00];
   DMA2_Channel2->CNDTR = (LEDS_W + 0x06) * 0x08;
-  DMA2_Channel2->CCR |= DMA_CCR2_MINC | DMA_CCR2_DIR | DMA_CCR2_PSIZE_0; 
-  //DMA_CCR2_CIRC | 
-  
+  DMA2_Channel2->CCR |= DMA_CCR2_MINC | DMA_CCR2_DIR | DMA_CCR2_PSIZE_0 |DMA_CCR2_CIRC;  
   
   RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
   TIM5->PSC = 0x00;

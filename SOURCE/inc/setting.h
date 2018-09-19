@@ -12,6 +12,7 @@
 #include "ds18b20.h"
 #include "w25qxx.h"
 #include "ws2811.h"
+#include "lighting.h"
 #include "timers.h"
 
 
@@ -66,6 +67,7 @@
 #define PRIORITY_RTC            0x0C
 
 #define PRIORITY_XPT2046        0x0D
+#define PRIORITY_BRIGHET        0x0A
 #define PRIORITY_RS485          0x01
 #define PRIORITY_DS18B20        0x00
 #define PRIORITY_DHT22_TIM      0x00

@@ -1,7 +1,7 @@
 #include "ili9488.h"
 
 #pragma O0
-void LcdInitt(void){
+void LcdInit(void){
   GPIOA->CRH &= ~(GPIO_CRH_CNF15);
   GPIOA->CRH |= GPIO_CRH_CNF15_1;
   GPIOA->CRH |= GPIO_CRH_MODE15;

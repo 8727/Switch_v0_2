@@ -6,7 +6,7 @@ struct xpt2046ReadInitTypeDef xpt2046Read;
 static uint16_t xpt2046Send[0x05] = {XPT2046_BAT, XPT2046_BRG, XPT2046_B, XPT2046_A, XPT2046_PRESSED};
 
 void TIM6_IRQHandler(void){
-  TIM6->SR = 0x00;
+  TIM6->SR &= ~TIM_SR_UIF;
   if(GPIOB->IDR & GPIO_IDR_IDR11){
     xpt2046Read.count = 0x03;
   }else{

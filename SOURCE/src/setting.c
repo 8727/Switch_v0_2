@@ -132,7 +132,7 @@ void Setting(void){
   Ee24cxxInit();
   ReadConfig();
   RtcInit();
-  LcdInitt();
+  LcdInit();
   TIM2->CCR1 = 0xFF;
   Xpt2046Init();
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
@@ -140,7 +140,8 @@ void Setting(void){
   Dht22Init();
   Ds18b20Init();
   
-  LEDstrip_init();
+  Ws2811Init();
+  BrighetInit();
   
   ReadSettingTimers();
   

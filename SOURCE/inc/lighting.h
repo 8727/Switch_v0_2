@@ -3,6 +3,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
+#include "setting.h"
 
 
 /* Define --------------------------------------------------------------------*/
@@ -19,6 +20,6 @@ struct LightingInitTypeDef{
 
 extern struct LightingInitTypeDef lighting;
 
-void Brighet(void);
+void BrighetInit(void);
 
 #endif /* _LIGHTING_H */
