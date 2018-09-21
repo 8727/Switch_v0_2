@@ -15,10 +15,23 @@ void TIM7_IRQHandler(void){
   }else{
     LED_CH2_HIGHT;
   }
-  
-  
-  
-  
+  for(uint8_t i = 0x00; i < LEDS_W; i++){
+    if(BKP->DR1 & (0x01 << i)){
+      if(ws2811W[i] < settings.brightness[i]) ws2811W[i]++;
+    }else{
+      if(ws2811W[i] > settings.brightness[i]) ws2811W[i]--;
+    }
+  }
+  if(BKP->DR2 & 0x01){
+    if(lighting.countCH1 < settings.brightnessCH1) lighting.countCH1++;
+  }else{
+    if(lighting.countCH1 > settings.brightnessCH1) lighting.countCH1--;
+  }
+  if(BKP->DR2 & 0x02){
+    if(lighting.countCH2 < settings.brightnessCH2) lighting.countCH2++;
+  }else{
+    if(lighting.countCH2 > settings.brightnessCH2) lighting.countCH2--;
+  }
 }
 
 void BrighetInit(void){
@@ -31,9 +44,6 @@ void BrighetInit(void){
   TIM7->SR = 0x00;
   TIM7->DIER |= TIM_DIER_UIE;
   TIM7->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
-  
-  lighting.countCH1 = 0x40;
-  lighting.countCH2 = 0xC0;
   
   NVIC_SetPriority(TIM7_IRQn, PRIORITY_BRIGHET);
   NVIC_EnableIRQ(TIM7_IRQn);

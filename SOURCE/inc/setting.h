@@ -22,6 +22,9 @@
 #define RTC_CALIBRATION         0x00        // RTC CalibrationPpm
 #define CALIB_POWER_V           0x00        // CALIB_POWER_V
 
+#define LEDS_RGB                0x32
+#define LEDS_W                  0x09
+
 #define CAN_SPEED               0x001C0004  //0x00050004 // 1000 Kb
                                             //0x001C0004 // 500 Kb
                                             //0x001C0009 // 250 Kb
@@ -108,6 +111,10 @@ struct settingsInitTypeDef{
   uint8_t ay;
   int16_t bx;
   int16_t by;
+  
+  uint8_t brightness[LEDS_W];
+  uint8_t brightnessCH1;
+  uint8_t brightnessCH2;
   
 };
 extern struct settingsInitTypeDef settings;
