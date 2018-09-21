@@ -24,6 +24,7 @@
 
 #define LEDS_RGB                0x32
 #define LEDS_W                  0x09
+#define LEDS_P                  0x06
 
 #define CAN_SPEED               0x001C0004  //0x00050004 // 1000 Kb
                                             //0x001C0004 // 500 Kb
@@ -112,9 +113,9 @@ struct settingsInitTypeDef{
   int16_t bx;
   int16_t by;
   
-  uint8_t brightness[LEDS_W];
-  uint8_t brightnessCH1;
-  uint8_t brightnessCH2;
+  uint8_t brightnessW[LEDS_W];
+  uint8_t brightnessP[LEDS_P];
+  uint8_t effectRGB;
   
 };
 extern struct settingsInitTypeDef settings;

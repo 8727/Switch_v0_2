@@ -97,17 +97,13 @@ void LcdInit(void){
   LCD_DATA = 0x06;
   LCD_REG = 0x36;
   switch(settings.rotation){
-    case 0x27:
-      LCD_DATA = 0xE8; //Dspl_Rotation_270
+    case 0x27: LCD_DATA = 0xE8; //Dspl_Rotation_270
     break;
-    case 0x18:
-      LCD_DATA = 0x88;  //Dspl_Rotation_180
+    case 0x18: LCD_DATA = 0x88;  //Dspl_Rotation_180
     break;
-    case 0x09:
-      LCD_DATA = 0x38;  //Dspl_Rotation_90
+    case 0x09: LCD_DATA = 0x38;  //Dspl_Rotation_90
     break;
-    default:
-      LCD_DATA = 0x48;  //Dspl_Rotation_0
+    default: LCD_DATA = 0x48;  //Dspl_Rotation_0
     break;
   }
   LCD_REG = 0x3A;

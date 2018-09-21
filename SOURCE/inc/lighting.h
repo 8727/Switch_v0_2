@@ -8,20 +8,15 @@
 
 
 /* Define --------------------------------------------------------------------*/
-#define LED_CH1_LOW       GPIOA->BRR = GPIO_BRR_BR0
-#define LED_CH2_LOW       GPIOA->BRR = GPIO_BRR_BR1
-#define LED_CH1_HIGHT     GPIOA->BSRR = GPIO_BSRR_BS0
-#define LED_CH2_HIGHT     GPIOA->BSRR = GPIO_BSRR_BS1
 
-struct LightingInitTypeDef{
-  uint8_t counter;
-  uint8_t countCH1;
-  uint8_t countCH2;
-  uint8_t mode;
+struct RGBInitTypeDef{
+  uint8_t effect;
+  uint8_t wait;
+  uint8_t pause;
+  uint8_t set;
   
 };
-
-extern struct LightingInitTypeDef lighting;
+extern struct RGBInitTypeDef rgb;
 
 void BrighetInit(void);
 
