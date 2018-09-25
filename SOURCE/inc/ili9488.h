@@ -7,7 +7,7 @@
 #include "gui.h"
 
 /* Define --------------------------------------------------------------------*/
-#define ILI9488_RESET_LOW         GPIOD->BRR = GPIO_BRR_BR3
+#define ILI9488_RESET_LOW         GPIOD->BSRR = GPIO_BSRR_BR3
 #define ILI9488_RESET_HIGHT       GPIOD->BSRR = GPIO_BSRR_BS3
 
 #define LCD_DATA                  *(uint16_t *) (0x60020000)

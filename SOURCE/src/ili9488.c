@@ -7,7 +7,7 @@ void LcdInit(void){
   GPIOA->CRH |= GPIO_CRH_MODE15;
   
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-  TIM2->PSC = 0x0FFF;
+  TIM2->PSC = 0x00FF;
   TIM2->ARR = 0xFF;
   TIM2->CCR1 = 0x00;  // Brighet LCD
   TIM2->CCER |= TIM_CCER_CC1E;

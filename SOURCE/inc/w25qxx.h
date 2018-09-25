@@ -6,7 +6,7 @@
 #include "ili9488.h"
 
 /* Define --------------------------------------------------------------------*/
-#define W25Qxx_CS_LOW      GPIOA->BRR = GPIO_BRR_BR4
+#define W25Qxx_CS_LOW      GPIOA->BSRR = GPIO_BSRR_BR4
 #define W25Qxx_CS_HIGHT    GPIOA->BSRR = GPIO_BSRR_BS4
 
 #define CMD_W_STATUS_1  0x01

@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>23</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134225020</Address>
+          <Address>134226340</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -190,12 +190,12 @@
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>lighting</ItemText>
+          <ItemText>pixel,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ws2811W</ItemText>
+          <ItemText>gui,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -242,48 +242,12 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\AFIO</Name>
-          <WinId>35899</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\BKP</Name>
-          <WinId>35897</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\DMA1</Name>
-          <WinId>35905</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\DMA2</Name>
-          <WinId>35901</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\GPIOA</Name>
-          <WinId>35903</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\RCC</Name>
-          <WinId>35900</WinId>
-        </Entry>
-        <Entry>
           <Name>System Viewer\SPI1</Name>
           <WinId>35904</WinId>
         </Entry>
         <Entry>
           <Name>System Viewer\TIM2</Name>
           <WinId>35898</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\TIM5</Name>
-          <WinId>35902</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\TIM6</Name>
-          <WinId>35895</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\TIM7</Name>
-          <WinId>35896</WinId>
         </Entry>
       </SystemViewers>
       <DebugDescription>

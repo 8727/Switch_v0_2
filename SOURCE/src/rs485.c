@@ -1,6 +1,33 @@
 #include "rs485.h"
 
 struct Rs485InitTypeDef rs485;
+static const uint8_t preamble[] = {0x55, 0xAA, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+
+void ImgUpdate(void){
+  if(!strncmp((char*)rs485.rxBuff, (char*)preamble, 0x0A)){
+    uint8_t c;
+    uint16_t adrr;
+    uint8_t send[1] = {0x01};
+    uint8_t buff[0x0100];
+    uint8_t write_check = 0x00;
+    adrr = rs485.rxBuff[0x0A] << 0x08;
+    adrr |= rs485.rxBuff[0x0B];
+    for(uint16_t i = 0; i < 0x100; i++){
+      c = rs485.rxBuff[0x0C + i];
+      buff[i] = c;
+      write_check ^= c;
+    }
+    c = rs485.rxBuff[0x010C];
+    if(c != write_check){
+      send[0] = 0x00;
+      Rs485Sends((uint8_t*)send);
+    }else{
+      W25QxxWritePage(adrr, buff);
+      Rs485Sends((uint8_t*)send);
+    }
+  }
+  rs485.rxStop = 0x00;
+}
 
 void Rs485Sends(uint8_t *str){
   uint8_t i = 0x00;
@@ -34,6 +61,9 @@ void USART1_IRQHandler(void){
   if(USART1->SR & USART_SR_RXNE){
     USART1->SR &= ~USART_SR_RXNE;
     rs485.rxBuff[rs485.rxStop++] = USART1->DR;
+    if(0x010C < rs485.rxStop){
+      ImgUpdate();
+    }
   }
   if(USART1->SR & USART_SR_TXE){
     if (rs485.txStart != rs485.txStop){

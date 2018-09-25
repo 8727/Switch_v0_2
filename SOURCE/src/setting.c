@@ -104,8 +104,8 @@ void ReadConfig(void){
   settings.calibPowerV = tempReadBuff[EEPROM_CALIB_POWER_V];
   settings.canSpeed = (tempReadBuff[EEPROM_CAN_SPEED] << 0x18)| (tempReadBuff[EEPROM_CAN_SPEED + 0x01] << 0x10) |
                       (tempReadBuff[EEPROM_CAN_SPEED + 0x02] << 0x08)| (tempReadBuff[EEPROM_CAN_SPEED + 0x03]);
-  settings.rs485Speed = (tempReadBuff[EEPROM_RS485_SPEED] << 0x08)| tempReadBuff[EEPROM_RS485_SPEED + 0x01];
-  
+//  settings.rs485Speed = (tempReadBuff[EEPROM_RS485_SPEED] << 0x08)| tempReadBuff[EEPROM_RS485_SPEED + 0x01];
+  settings.rs485Speed = RS485_SPEED;
   
   
   
@@ -137,6 +137,7 @@ void Setting(void){
   Xpt2046Init();
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)) Xpt2046Calibration();
   W25QxxInit();
+  Rs485Init();
   Dht22Init();
   Ds18b20Init();
   
@@ -145,5 +146,6 @@ void Setting(void){
   
   ReadSettingTimers();
   
-  TIM2->CCR1 = 0x20;
+  GuiLoadImg(0x00, 0x00, 0x00);
+  //TIM2->CCR1 = 0x20;
 }

@@ -101,7 +101,7 @@ void RGBRighetLeftToCenter(void){
 void RGBCenterToRighetLeft(void){
   if(0x00 < rgb.wait){
     rgb.pause++;
-    if(0xFF < rgb.pause){
+    if(0xFE < rgb.pause){
       rgb.set = 0x00;
       rgb.wait = 0x00;
       rgb.pause = 0x00;

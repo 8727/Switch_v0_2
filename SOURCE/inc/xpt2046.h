@@ -9,7 +9,7 @@
 
 
 /* Define --------------------------------------------------------------------*/
-#define XPT2046_CS_LOW      GPIOB->BRR = GPIO_BRR_BR12
+#define XPT2046_CS_LOW      GPIOB->BSRR = GPIO_BSRR_BR12
 #define XPT2046_CS_HIGHT    GPIOB->BSRR = GPIO_BSRR_BS12
 
 #define XPT2046_A           0x0090
