@@ -146,6 +146,5 @@ void Setting(void){
   
   ReadSettingTimers();
   
-  GuiLoadImg(0x00, 0x00, 0x00);
   //TIM2->CCR1 = 0x20;
 }

@@ -144,9 +144,20 @@ void W25QxxInit(void){
     break;
   }
   W25QxxReadTable();
-  GuiLoadImg(0x00, 0x00, 0x00);
 }
 
+void W25QxxDMAInit(void){
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  GuiLoadImg(0x00, 0x00, 0x00);
+}
 void GuiLoadImg(uint16_t x, uint16_t y, uint8_t numb){
   uint32_t pixel = gui[numb].width * gui[numb].height;
   GuiSetWindow(x, y, gui[numb].width, gui[numb].height);

@@ -27,6 +27,13 @@
 #define LEDS_W                  0x09
 #define LEDS_P                  0x06
 
+
+
+
+
+
+
+
 #define CAN_SPEED               0x001C0004  //0x00050004 // 1000 Kb
                                             //0x001C0004 // 500 Kb
                                             //0x001C0009 // 250 Kb
@@ -48,6 +55,11 @@
                                             //0x0823       //38400
                                             //0x208D       //9600
 
+
+
+
+
+
 #define EEPROM_BUILD_DATE       0x00        // 0x00, 0x01, 0x02, 0x03  BUILD_DATE
 #define EEPROM_STATUS           0x04        // Status
 #define EEPROM_DEVICE_N         0x05        // Device number
@@ -57,7 +69,6 @@
 #define EEPROM_NAME_BUILD       0x01        // 0x08, 0x09, 0x0A, 0x0B, 0x0C  // NAME_BUILD
 
 #define EEPROM_CALIB_POWER_V    0x0F        // CALIB_POWER_V
-
 
 #define EEPROM_CAN_SPEED        0x03        // 0x18, 0x19, 0x1A, 0x1B
                                             // 0x1C, 0x1D, 0x1E, 0x1F
@@ -113,6 +124,8 @@ struct settingsInitTypeDef{
   uint8_t ay;
   int16_t bx;
   int16_t by;
+  
+  
   
   uint8_t brightnessW[LEDS_W];
   uint8_t brightnessP[LEDS_P];
