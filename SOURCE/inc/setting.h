@@ -7,11 +7,11 @@
 #include "Ee24cxx.h"
 #include "rtc.h"
 #include "ili9488.h"
+#include "w25qxx.h"
 #include "xpt2046.h"
 #include "rs485.h"
 #include "dht22.h"
 #include "ds18b20.h"
-#include "w25qxx.h"
 #include "ws2811.h"
 #include "lighting.h"
 #include "timers.h"
@@ -23,9 +23,9 @@
 #define RTC_CALIBRATION         0x00        // RTC CalibrationPpm
 #define CALIB_POWER_V           0x00        // CALIB_POWER_V
 
-#define LEDS_RGB                0x32
+#define LEDS_RGB                0x64
 #define LEDS_W                  0x09
-#define LEDS_P                  0x06
+#define LEDS_P                  0x09
 
 
 
@@ -54,7 +54,18 @@
                                             //0x056D       //57600
                                             //0x0823       //38400
                                             //0x208D       //9600
-
+//#define USART_2_3_SPEED                     0x002B       //921600
+//#define USART_2_3_SPEED                     0x0050       //500000
+//#define USART_2_3_SPEED                     0x0057       //460800
+//#define USART_2_3_SPEED                     0x00A0       //250000
+//#define USART_2_3_SPEED                     0x00AE       //230400
+//#define USART_2_3_SPEED                     0x0000       //125000
+#define USART_2_3_SPEED_1152                  0x015B       //115200
+//#define USART_2_3_SPEED_1152                0x015A       //115200
+//#define USART_2_3_SPEED                     0x02B6       //57600
+//#define USART_2_3_SPEED                     0x0412       //38400
+//#define USART_2_3_SPEED                     0x0823       //19200
+#define USART_2_3_SPEED_96                    0x1047       //9600
 
 
 
@@ -81,31 +92,18 @@
 #define PRIORITY_DHT22_DMA      0x0F
 #define PRIORITY_ADC            0x0E
 #define PRIORITY_RTC            0x0C
-
 #define PRIORITY_XPT2046        0x0D
 #define PRIORITY_BRIGHET        0x0A
 #define PRIORITY_RS485          0x01
 #define PRIORITY_DS18B20        0x00
 #define PRIORITY_DHT22_TIM      0x00
-
 #define PRIORITY_CAN_TX         0x00
 #define PRIORITY_CAN_RX0        0x00
 #define PRIORITY_CAN_RX1        0x00
-
 #define PRIORITY_CAN_ERROR      0x00
+#define PRIORITY_GUI            0x00
 
-//#define USART_2_3_SPEED        0x002B       //921600
-//#define USART_2_3_SPEED        0x0050       //500000
-//#define USART_2_3_SPEED        0x0057       //460800
-//#define USART_2_3_SPEED        0x00A0       //250000
-//#define USART_2_3_SPEED        0x00AE       //230400
-//#define USART_2_3_SPEED        0x0000       //125000
-#define USART_2_3_SPEED_1152     0x015B       //115200
-//#define USART_2_3_SPEED_1152   0x015A       //115200
-//#define USART_2_3_SPEED        0x02B6       //57600
-//#define USART_2_3_SPEED        0x0412       //38400
-//#define USART_2_3_SPEED        0x0823       //19200
-#define USART_2_3_SPEED_96       0x1047       //9600
+
 
 struct settingsInitTypeDef{
   uint8_t  type;

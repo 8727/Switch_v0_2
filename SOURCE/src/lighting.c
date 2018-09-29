@@ -3,7 +3,7 @@
 struct RGBInitTypeDef rgb;
 
 void BrighetRGBAllFade(uint8_t step){
-  for(uint8_t i = 0x00; i < LEDS_RGB * 0x03; i++){
+  for(uint16_t i = 0x00; i < LEDS_RGB * 0x03; i++){
     if(ws2811RGB[i] > step){
       ws2811RGB[i] -= step;
     }else{
@@ -49,7 +49,7 @@ void RGBRighetToLeft(void){
     }
   }else{
     uint8_t y = rgb.set * 0x03;
-    uint8_t x = LEDS_RGB * 0x03 - 0x03;
+    uint16_t x = LEDS_RGB * 0x03 - 0x03;
     ws2811RGB[x - y] = 0xFF;
     ws2811RGB[x - y + 0x01] = 0xFF;
     ws2811RGB[x - y + 0x02] = 0xFF;
@@ -67,7 +67,7 @@ void RGBRighetToLeft(void){
 
 void RGBRighetLeftToCenter(void){
   uint8_t y = rgb.set * 0x03;
-  uint8_t x = LEDS_RGB * 0x03 - 0x03;
+  uint16_t x = LEDS_RGB * 0x03 - 0x03;
   if(0x00 < rgb.wait){
     rgb.pause++;
     ws2811RGB[x / 0x02] = 0xFF;
@@ -109,7 +109,7 @@ void RGBCenterToRighetLeft(void){
     }
   }else{
     uint8_t y = rgb.set * 0x03;
-    uint8_t x = LEDS_RGB * 0x03 - 0x03;
+    uint16_t x = LEDS_RGB * 0x03 - 0x03;
     uint8_t z = x / 0x02;
     ws2811RGB[z + y] = 0xFF;
     ws2811RGB[z + y + 0x01] = 0xFF;

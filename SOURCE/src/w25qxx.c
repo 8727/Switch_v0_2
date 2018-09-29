@@ -1,7 +1,6 @@
 #include "w25qxx.h"
 
 struct w25qxxInitTypeDef w25qxx;
-struct TableInitTypeDef gui[0x0100];
 
 uint8_t W25QxxWriteRead(uint8_t byte){
   while(!(SPI1->SR & SPI_SR_TXE));
@@ -38,6 +37,23 @@ void W25QxxErase(void){
   W25QxxWriteRead(CMD_ERASE_CHIP);
   W25Qxx_CS_HIGHT;
   W25QxxWriteWaitEnd();
+  W25QxxWriteOff();
+}
+
+void W25QxxEraseBlocks(void){
+  GuiEraseW25qxx();
+  W25QxxWriteOn();
+  for(uint8_t i = 0x00; i < w25qxx.blocks; i++){
+    W25Qxx_CS_LOW;
+    W25QxxWriteRead(CMD_ERASE_64K);
+    W25QxxWriteRead(i);
+    W25QxxWriteRead(0x00);
+    W25QxxWriteRead(0x00);
+    W25Qxx_CS_HIGHT;
+    GuiEraseBlocks(i);
+    W25QxxWriteWaitEnd();
+  }
+  W25QxxWriteOff();
 }
 
 void W25QxxReadPage(uint16_t page, uint8_t *buff){
@@ -124,55 +140,18 @@ void W25QxxInit(void){
   W25Qxx_CS_HIGHT;
   
   switch (w25qxx.id){
-    case 0x14:
-      w25qxx.name = "W25Q08BV ";
+    case 0x16:  w25qxx.blocks = 0x40;
+                w25qxx.name = "W25Q32BV ";
     break;
-    case 0x15:  
-      w25qxx.name = "W25Q16BV ";
+    case 0x17:  w25qxx.blocks = 0x80;
+                w25qxx.name = "W25Q64FV ";
     break;
-    case 0x16:  
-      w25qxx.name = "W25Q32BV ";
+    case 0x18:  w25qxx.blocks = 0xFF;
+                w25qxx.name = "W25Q128FV";
     break;
-    case 0x17:  
-      w25qxx.name = "W25Q64FV ";
-    break;
-    case 0x18:  
-      w25qxx.name = "W25Q128FV";
-    break;
-    default:  
-      w25qxx.name = "XXXXXXXXX";
+    default:    w25qxx.blocks = 0x00;
+                w25qxx.name = "XXXXXXXXX";
     break;
   }
   W25QxxReadTable();
-}
-
-void W25QxxDMAInit(void){
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  GuiLoadImg(0x00, 0x00, 0x00);
-}
-void GuiLoadImg(uint16_t x, uint16_t y, uint8_t numb){
-  uint32_t pixel = gui[numb].width * gui[numb].height;
-  GuiSetWindow(x, y, gui[numb].width, gui[numb].height);
-  W25Qxx_CS_LOW;
-  W25QxxWriteRead(CMD_FAST_READ);
-  W25QxxWriteRead(gui[numb].address >> 0x08);
-  W25QxxWriteRead(gui[numb].address & 0x00FF);
-  W25QxxWriteRead(0x00);
-  W25QxxWriteRead(0x00);
-  SPI1->CR1 |= SPI_CR1_DFF;
-  while(pixel--){
-    SPI1->DR = 0x0000;
-    while(!(SPI1->SR & SPI_SR_RXNE));
-    LCD_DATA = SPI1->DR;
-  }
-  SPI1->CR1 &= ~SPI_CR1_DFF;
-  W25Qxx_CS_HIGHT;
 }

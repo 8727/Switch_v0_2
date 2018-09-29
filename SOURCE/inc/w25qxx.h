@@ -35,26 +35,16 @@
 #define CMD_ERASE_64K   0xD8
 
 struct w25qxxInitTypeDef{
-  uint8_t  id;
+  uint8_t id;
+  uint8_t blocks;
   char     *name;
 };
 
-struct TableInitTypeDef{
-  uint16_t address;
-  uint16_t width;
-  uint16_t height;
-  uint8_t  type;
-  uint8_t  pictures;
-  uint8_t  fps;
-  uint8_t  a;
-  uint8_t  b;
-  uint8_t  c;
-};
-
 extern struct w25qxxInitTypeDef w25qxx;
-extern struct TableInitTypeDef gui[0x0100];
 
+uint8_t W25QxxWriteRead(uint8_t byte);
 void W25QxxErase(void);
+void W25QxxEraseBlocks(void);
 void W25QxxReadPage(uint16_t page, uint8_t *buff);
 void W25QxxWritePage(uint16_t page, uint8_t *buff);
 void W25QxxReadTable(void);

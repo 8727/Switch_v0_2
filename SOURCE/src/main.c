@@ -9,7 +9,8 @@ int main(void){
 //  while(i--){
 //    LCD_DATA = WHITE;
 //  }
-  DelayMs(250);
+  DelayMs(1000);
+//    W25QxxEraseBlocks();
   
   }
 }

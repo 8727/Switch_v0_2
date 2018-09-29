@@ -8,9 +8,27 @@
 
 /* Define --------------------------------------------------------------------*/
 
+struct TableInitTypeDef{
+  uint16_t address;
+  uint16_t width;
+  uint16_t height;
+  uint8_t  type;
+  uint8_t  pictures;
+  uint8_t  fps;
+  uint8_t  a;
+  uint8_t  b;
+  uint8_t  c;
+};
+
+extern struct TableInitTypeDef gui[0x0100];
+
 void GuiCalibDraw(uint16_t x, uint16_t y);
 void GuiCalibErase(uint16_t x, uint16_t y);
 void GuiSetWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 void GuiFullWindow(uint16_t color);
+void GuiEraseW25qxx(void);
+void GuiEraseBlocks(uint8_t block);
+
+void GuiInit(void);
 
 #endif /* _GUI_H */

@@ -119,6 +119,5 @@ void LcdInit(void){
   DelayMs(0x78); // 120ms
   LCD_REG = 0x29;
   
-  GuiSetWindow(0x00, 0x00, settings.maxX, settings.maxY);
-  GuiFullWindow(BLACK);
+//  GuiFullWindow(BLACK);
 }
