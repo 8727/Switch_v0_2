@@ -20,7 +20,12 @@ struct TableInitTypeDef{
   uint8_t  c;
 };
 
-extern struct TableInitTypeDef gui[0x0100];
+struct GuiInitTypeDef{
+  uint8_t  step;
+};
+
+extern struct TableInitTypeDef img[0x0100];
+extern struct GuiInitTypeDef gui;
 
 void GuiCalibDraw(uint16_t x, uint16_t y);
 void GuiCalibErase(uint16_t x, uint16_t y);

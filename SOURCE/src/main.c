@@ -4,13 +4,14 @@ int main(void){
   Start();
   Setting();
   while(0x01){
-//  GuiSetWindow(xpt2046.x - 1, xpt2046.y -1, 3, 3);
-//  uint8_t i = 0x09;
-//  while(i--){
-//    LCD_DATA = WHITE;
-//  }
-  DelayMs(1000);
+//    DelayMs(1000);
+//    GuiLoadImg(0x00, 0x00, 0x00);
+    DelayMs(1000);
+    GuiLoadImg(0x00, 0x00, 0x01);
+    DelayMs(1000);
+    GuiLoadImg(0x00, 0x00, 0x02);
+//    DelayMs(100);
 //    W25QxxEraseBlocks();
-  
+//    DelayMs(100000);
   }
 }

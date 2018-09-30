@@ -1,8 +1,9 @@
 #include "gui.h"
 
-struct TableInitTypeDef gui[0x0100];
+struct TableInitTypeDef img[0x0100];
+struct GuiInitTypeDef gui;
 static uint16_t buffDMA = 0x0000;
-static uint8_t guiStep = 0x00;
+
 void GuiSetWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t height){
   if(settings.maxX < width) width = settings.maxX;
   if(settings.maxY < height) height = settings.maxY;
@@ -61,9 +62,9 @@ void GuiEraseW25qxx(void){
 
 void GuiEraseBlocks(uint8_t block){
   uint8_t i = 0x32;
-  GuiSetWindow(block, 0x32, 0x01, 0x20);
+  GuiSetWindow(((settings.maxX - w25qxx.blocks) / 0x02) + block, (settings.maxY / 0x02) - 0x10, 0x01, 0x20);
   while(i--){
-    LCD_DATA = RED;
+    LCD_DATA = WHITE;
   }
 }
 
@@ -100,8 +101,8 @@ void DMA1_Channel2_IRQHandler(void){
   DMA1->IFCR |= DMA_IFCR_CGIF2;
   DMA1_Channel2->CCR &= ~DMA_CCR2_EN;
   DMA1_Channel3->CCR &= ~DMA_CCR3_EN;
-  if(0x00 < guiStep){
-    guiStep--;
+  if(0x00 < gui.step){
+    gui.step--;
     DMA1_Channel2->CNDTR = 0xFFFF;
     DMA1_Channel3->CNDTR = 0xFFFF;
     DMA1_Channel2->CCR |= DMA_CCR2_EN;
@@ -114,25 +115,24 @@ void DMA1_Channel2_IRQHandler(void){
 }
 
 void GuiLoadImg(uint16_t x, uint16_t y, uint8_t numb){
-  uint32_t pixel = gui[numb].width * gui[numb].height;
-  GuiSetWindow(x, y, gui[numb].width, gui[numb].height);
+  uint32_t pixel = img[numb].width * img[numb].height;
+  GuiSetWindow(x, y, img[numb].width, img[numb].height);
   if(0x025800 < pixel) pixel =  0x025800;
   if(0xFFFF < pixel){
-    guiStep = pixel / 0xFFFF;
-    DMA1_Channel2->CNDTR = pixel - guiStep * 0xFFFF;
-    DMA1_Channel3->CNDTR = pixel - guiStep * 0xFFFF;
+    gui.step = pixel / 0xFFFF;
+    DMA1_Channel2->CNDTR = pixel - gui.step * 0xFFFF;
+    DMA1_Channel3->CNDTR = pixel - gui.step * 0xFFFF;
   }else{
     DMA1_Channel2->CNDTR = pixel;
     DMA1_Channel3->CNDTR = pixel;
   }
   W25Qxx_CS_LOW;
   W25QxxWriteRead(CMD_FAST_READ);
-  W25QxxWriteRead(gui[numb].address >> 0x08);
-  W25QxxWriteRead(gui[numb].address & 0x00FF);
+  W25QxxWriteRead(img[numb].address >> 0x08);
+  W25QxxWriteRead(img[numb].address & 0x00FF);
   W25QxxWriteRead(0x00);
   W25QxxWriteRead(0x00);
   SPI1->CR1 |= SPI_CR1_DFF;
-  
   SPI1->CR2 |= SPI_CR2_RXDMAEN | SPI_CR2_TXDMAEN;
   DMA1_Channel2->CCR |= DMA_CCR2_EN;
   DMA1_Channel3->CCR |= DMA_CCR3_EN;

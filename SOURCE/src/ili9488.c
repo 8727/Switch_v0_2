@@ -78,7 +78,7 @@ void LcdInit(void){
   LCD_DATA = 0x36;
   LCD_DATA = 0x0F;
   LCD_REG = 0xB1;
-  LCD_DATA = 0xA0;
+  LCD_DATA = 0xC0;
   LCD_REG = 0xB4;
   LCD_DATA = 0x02;
   LCD_REG = 0xC0;

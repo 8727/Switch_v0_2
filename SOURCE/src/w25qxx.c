@@ -15,7 +15,7 @@ void W25QxxWriteWaitEnd(void){
   W25QxxWriteRead(CMD_R_STATUS_1);
   do{
     status = W25QxxWriteRead(0x00);
-  }while((status & 0x01) == 0x01);   // Write in progress 
+  }while((status & 0x01) == 0x01);
   W25Qxx_CS_HIGHT;
 }
 
@@ -42,8 +42,8 @@ void W25QxxErase(void){
 
 void W25QxxEraseBlocks(void){
   GuiEraseW25qxx();
-  W25QxxWriteOn();
   for(uint8_t i = 0x00; i < w25qxx.blocks; i++){
+    W25QxxWriteOn();
     W25Qxx_CS_LOW;
     W25QxxWriteRead(CMD_ERASE_64K);
     W25QxxWriteRead(i);
@@ -91,18 +91,18 @@ void W25QxxReadTable(void){
   W25QxxWriteRead(0x00);
   W25QxxWriteRead(0x00);
   for(i = 0x00; i < 0x0100; i++){
-    gui[i].address = W25QxxWriteRead(0x00) << 0x08;
-    gui[i].address |= W25QxxWriteRead(0x00);
-    gui[i].width = W25QxxWriteRead(0x00) << 0x08;
-    gui[i].width |= W25QxxWriteRead(0x00);
-    gui[i].height = W25QxxWriteRead(0x00) << 0x08;
-    gui[i].height |= W25QxxWriteRead(0x00);
-    gui[i].type = W25QxxWriteRead(0x00);
-    gui[i].pictures = W25QxxWriteRead(0x00);
-    gui[i].fps = W25QxxWriteRead(0x00);
-    gui[i].a = W25QxxWriteRead(0x00);
-    gui[i].b = W25QxxWriteRead(0x00);
-    gui[i].c = W25QxxWriteRead(0x00);
+    img[i].address = W25QxxWriteRead(0x00) << 0x08;
+    img[i].address |= W25QxxWriteRead(0x00);
+    img[i].width = W25QxxWriteRead(0x00) << 0x08;
+    img[i].width |= W25QxxWriteRead(0x00);
+    img[i].height = W25QxxWriteRead(0x00) << 0x08;
+    img[i].height |= W25QxxWriteRead(0x00);
+    img[i].type = W25QxxWriteRead(0x00);
+    img[i].pictures = W25QxxWriteRead(0x00);
+    img[i].fps = W25QxxWriteRead(0x00);
+    img[i].a = W25QxxWriteRead(0x00);
+    img[i].b = W25QxxWriteRead(0x00);
+    img[i].c = W25QxxWriteRead(0x00);
   }
   W25Qxx_CS_HIGHT;
 }
