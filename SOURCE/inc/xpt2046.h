@@ -20,6 +20,8 @@
 #define XPT2046_PRESSED     0x0000
 #define XPT2046_RELEASED    0x0001
 
+static const uint16_t xpt2046Send[0x05] = {XPT2046_BAT, XPT2046_BRG, XPT2046_B, XPT2046_A, XPT2046_PRESSED};
+
 struct xpt2046ReadInitTypeDef{
   uint8_t status;
   uint8_t count;
