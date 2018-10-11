@@ -8,6 +8,9 @@
 
 /* Define --------------------------------------------------------------------*/
 
+static const uint8_t brOn [] = {0xC7, 0xBB, 0x6D, 0x45, 0x45, 0x45, 0x45, 0x45, 0x45, 0x45, 0x45, 0x45, 0x45, 0x6D, 0xBB, 0xC7};
+static const uint8_t brOff [] = {0xC7, 0xBB, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0x7D, 0xBB, 0xC7};
+
 struct TableInitTypeDef{
   uint16_t address;
   uint16_t width;
@@ -33,6 +36,7 @@ void GuiSetWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 void GuiFullWindow(uint16_t color);
 void GuiEraseW25qxx(void);
 void GuiEraseBlocks(uint8_t block);
+void GuiBr(void);
 
 void GuiInit(void);
 
