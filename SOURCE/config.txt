@@ -1,10 +1,9 @@
 i2с работа с сонфигами
 управление теном
-ws2811 ok управление освещением
+управление освещением
 usart rs485
 can
 micro sd
-w25qxx
 buzzer
 pir
 
@@ -17,7 +16,7 @@ FSMC
 
 XPT2046
 SPI2
-TIM6 //50ms 20 hz
+TIM6 //50ms 16 hz
 
 DHT22
 TIM4 //2s 0.5 hz
