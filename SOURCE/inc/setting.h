@@ -23,7 +23,7 @@
 #define RTC_CALIBRATION         0x00        // RTC CalibrationPpm
 #define CALIB_POWER_V           0x00        // CALIB_POWER_V
 
-#define LEDS_RGB                0x64
+#define LEDS_BRG                0x64
 #define LEDS_W                  0x09
 #define LEDS_P                  0x09
 

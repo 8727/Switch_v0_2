@@ -2,11 +2,11 @@
 
 uint8_t ws2811W[LEDS_W];
 uint8_t ws2811P[LEDS_P];
-uint8_t ws2811RGB[LEDS_RGB * 0x03];
+uint8_t ws2811BRG[LEDS_BRG * 0x03];
 
 uint8_t ws2811wDMA[LEDS_W + 0x06][0x08];
 uint8_t ws2811pDMA[LEDS_P + 0x06][0x08];
-uint8_t ws2811rgbDMA[LEDS_RGB + 0x02][0x03][0x08];
+uint8_t ws2811brgDMA[LEDS_BRG + 0x02][0x03][0x08];
 
 void Ws2811WUpdate(void){
   uint8_t i, k;
@@ -26,12 +26,12 @@ void Ws2811PUpdate(void){
   }
 }
 
-void Ws2811RGBUpdate(void){
+void Ws2811BRGUpdate(void){
   uint8_t i, j, k;
-  for(i = 0; i < LEDS_RGB; i++){
+  for(i = 0; i < LEDS_BRG; i++){
     for(j = 0; j < 0x03; j++){
       for(k = 0; k < 0x08; k++){
-        ws2811rgbDMA[i + 0x02][j][k] = (ws2811RGB[i * 0x03 + j] & (0x01 << (0x07 - k))) ? LED_HIGHT : LED_LOW;
+        ws2811brgDMA[i + 0x02][j][k] = (ws2811BRG[i * 0x03 + j] & (0x01 << (0x07 - k))) ? LED_HIGHT : LED_LOW;
       }
     }
   }
@@ -44,8 +44,8 @@ void Ws2811Init(void){
   
   RCC->AHBENR |= RCC_AHBENR_DMA2EN;
   DMA2_Channel1->CPAR = (uint32_t) &TIM5->CCR4;
-  DMA2_Channel1->CMAR = (uint32_t) &ws2811rgbDMA[0x00];
-  DMA2_Channel1->CNDTR = (LEDS_RGB + 0x02) * 0x18;
+  DMA2_Channel1->CMAR = (uint32_t) &ws2811brgDMA[0x00];
+  DMA2_Channel1->CNDTR = (LEDS_BRG + 0x02) * 0x18;
   DMA2_Channel1->CCR |= DMA_CCR1_MINC | DMA_CCR1_DIR | DMA_CCR1_PSIZE_0 |DMA_CCR1_CIRC;
   
   DMA2_Channel2->CPAR = (uint32_t) &TIM5->CCR3;
@@ -78,10 +78,10 @@ void Ws2811Init(void){
     ws2811P[i] = settings.brightnessP[i];
   }
   Ws2811PUpdate();
-  for(i = 0x02; i < LEDS_RGB + 0x02; i++){
+  for(i = 0x02; i < LEDS_BRG + 0x02; i++){
     for (j = 0x00; j < 0x03; j++){
       for (k = 0x00; k < 0x08; k++){
-        ws2811rgbDMA[i][j][k] = LED_LOW;
+        ws2811brgDMA[i][j][k] = LED_LOW;
       }
     }
   }

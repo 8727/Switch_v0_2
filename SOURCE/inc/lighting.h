@@ -16,7 +16,7 @@ struct RGBInitTypeDef{
   uint8_t set;
   
 };
-extern struct RGBInitTypeDef rgb;
+extern struct RGBInitTypeDef brg;
 
 void BrighetInit(void);
 
