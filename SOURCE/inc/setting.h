@@ -25,9 +25,10 @@
 
 #define LEDS_BRG                0x64
 #define LEDS_W                  0x09
-#define LEDS_P                  0x09
 
-
+#define LEDS_BRG_B              0xFF
+#define LEDS_BRG_R              0xFF
+#define LEDS_BRG_G              0xFF
 
 
 
@@ -126,7 +127,6 @@ struct settingsInitTypeDef{
   
   
   uint8_t brightnessW[LEDS_W];
-  uint8_t brightnessP[LEDS_P];
   uint8_t effectRGB;
   
 };

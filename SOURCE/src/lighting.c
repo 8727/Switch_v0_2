@@ -26,9 +26,9 @@ void RGBLeftToRighet(void){
     }
   }else{
     uint16_t y = brg.set * 0x03;
-    ws2811BRG[y] = 0xFF;
-    ws2811BRG[y + 0x01] = 0xFF;
-    ws2811BRG[y + 0x02] = 0xFF;
+    ws2811BRG[y] = LEDS_BRG_B;
+    ws2811BRG[y + 0x01] = LEDS_BRG_R;
+    ws2811BRG[y + 0x02] = LEDS_BRG_G;
     brg.set++;
     if(LEDS_BRG <= brg.set){
       brg.wait = 0x01;
@@ -49,9 +49,9 @@ void RGBRighetToLeft(void){
   }else{
     uint16_t y = brg.set * 0x03;
     uint16_t x = LEDS_BRG * 0x03 - 0x03;
-    ws2811BRG[x - y] = 0xFF;
-    ws2811BRG[x - y + 0x01] = 0xFF;
-    ws2811BRG[x - y + 0x02] = 0xFF;
+    ws2811BRG[x - y] = LEDS_BRG_B;
+    ws2811BRG[x - y + 0x01] = LEDS_BRG_R;
+    ws2811BRG[x - y + 0x02] = LEDS_BRG_G;
     brg.set++;
     if(LEDS_BRG <= brg.set){
       brg.wait = 0x01;
@@ -72,12 +72,12 @@ void RGBRighetLeftToCenter(void){
       brg.effect = 0x04;
     }
   }else{
-    ws2811BRG[y] = 0xFF;
-    ws2811BRG[y + 0x01] = 0xFF;
-    ws2811BRG[y + 0x02] = 0xFF;
-    ws2811BRG[x - y] = 0xFF;
-    ws2811BRG[x - y + 0x01] = 0xFF;
-    ws2811BRG[x - y + 0x02] = 0xFF;
+    ws2811BRG[y] = LEDS_BRG_B;
+    ws2811BRG[y + 0x01] = LEDS_BRG_R;
+    ws2811BRG[y + 0x02] = LEDS_BRG_G;
+    ws2811BRG[x - y] = LEDS_BRG_B;
+    ws2811BRG[x - y + 0x01] = LEDS_BRG_R;
+    ws2811BRG[x - y + 0x02] = LEDS_BRG_G;
     brg.set++;
     if(LEDS_BRG / 0x02 < brg.set){
       brg.wait = 0x01;
@@ -100,12 +100,12 @@ void RGBCenterToRighetLeft(void){
     uint16_t y = brg.set * 0x03;
     uint16_t x = LEDS_BRG * 0x03 - 0x03;
     uint16_t z = x / 0x02;
-    ws2811BRG[z + y + 0x02] = 0xFF;
-    ws2811BRG[z + y + 0x03] = 0xFF;
-    ws2811BRG[z + y + 0x04] = 0xFF;
-    ws2811BRG[z - y + 0x01] = 0xFF;
-    ws2811BRG[z - y + 0x00] = 0xFF;
-    ws2811BRG[z - y - 0x01] = 0xFF;
+    ws2811BRG[z + y + 0x02] = LEDS_BRG_B;
+    ws2811BRG[z + y + 0x03] = LEDS_BRG_R;
+    ws2811BRG[z + y + 0x04] = LEDS_BRG_G;
+    ws2811BRG[z - y + 0x01] = LEDS_BRG_G;
+    ws2811BRG[z - y + 0x00] = LEDS_BRG_R;
+    ws2811BRG[z - y - 0x01] = LEDS_BRG_B;
     brg.set++;
     if(LEDS_BRG / 0x02 < brg.set){
       brg.wait = 0x01;
@@ -123,13 +123,6 @@ void TIM7_IRQHandler(void){
       if(ws2811W[i] < settings.brightnessW[i]) ws2811W[i]++;
     }else{
       if(ws2811W[i] > settings.brightnessW[i]) ws2811W[i]--;
-    }
-  }
-  for(i = 0x00; i < LEDS_P; i++){
-    if(BKP->DR2 & (0x01 << i)){
-      if(ws2811P[i] < settings.brightnessP[i]) ws2811P[i]++;
-    }else{
-      if(ws2811P[i] > settings.brightnessP[i]) ws2811P[i]--;
     }
   }
   switch(brg.effect){

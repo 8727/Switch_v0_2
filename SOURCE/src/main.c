@@ -16,6 +16,6 @@ int main(void){
     
 //    DelayMs(1000);
 //    W25QxxEraseBlocks();
-    DelayMs(10000);
+    DelayMs(20000);
   }
 }
