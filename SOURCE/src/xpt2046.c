@@ -14,6 +14,7 @@ void TIM6_IRQHandler(void){
   xpt2046Read.rawCount = 0x00;
   SPI2->CR2 |= SPI_CR2_RXNEIE;
   SPI2->DR = xpt2046Send[xpt2046Read.rawCount];
+  UpdateBrightnessW();
 }
 
 void SPI2_IRQHandler(void){
@@ -86,6 +87,9 @@ void Xpt2046Init(void){
   GPIOB->CRH &= ~(GPIO_CRH_CNF12 | GPIO_CRH_CNF13 | GPIO_CRH_CNF15);
   GPIOB->CRH |= GPIO_CRH_CNF13_1 | GPIO_CRH_CNF15_1;
   GPIOB->CRH |= GPIO_CRH_MODE12 | GPIO_CRH_MODE13 | GPIO_CRH_MODE15;
+  
+  xpt2046Read.status = XPT2046_RELEASED;
+  
   XPT2046_CS_HIGHT;
 
   RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
@@ -100,17 +104,16 @@ void Xpt2046Init(void){
   SPI2->CR1 |= SPI_CR1_SPE;
   
   RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
-  TIM6->PSC = 0x1F3F; // 7999
-  TIM6->ARR =  0x0270; // 624 // 16Hz
-  TIM4->SR = 0x00;
+  TIM6->PSC = 0x1F3F; // 7999 80000000:8000=10000Hz
+//  TIM6->ARR = 0xC7; // 50Hz
+  TIM6->ARR = 0x63; // 100Hz
+  TIM6->SR = 0x00;
   TIM6->DIER |= TIM_DIER_UIE;
   TIM6->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
   
-  xpt2046Read.status = XPT2046_RELEASED;
-  
-  NVIC_SetPriority(SPI2_IRQn, PRIORITY_XPT2046);
+  NVIC_SetPriority(SPI2_IRQn, PRIORITY_XPT2046_LIGHT);
   NVIC_EnableIRQ(SPI2_IRQn);
   
-  NVIC_SetPriority(TIM6_IRQn, PRIORITY_XPT2046);
+  NVIC_SetPriority(TIM6_IRQn, PRIORITY_XPT2046_LIGHT);
   NVIC_EnableIRQ(TIM6_IRQn);
 }

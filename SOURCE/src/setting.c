@@ -147,7 +147,6 @@ void Setting(void){
   Ds18b20Init();
   
   Ws2811Init();
-  BrighetInit();
   
   ReadSettingTimers();
   

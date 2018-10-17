@@ -1,8 +1,9 @@
 #include "lighting.h"
 
-struct RGBInitTypeDef brg;
+struct BRGInitTypeDef brg;
 
-void BrighetRGBAllFade(uint8_t step, uint8_t level){
+void BRGBrighetAllFade(uint8_t step, uint8_t level){
+  uint8_t z = 0x00;
   for(uint16_t i = 0x00; i < LEDS_BRG * 0x03; i++){
     if(ws2811BRG[i] > level){
       if(ws2811BRG[i] > step){
@@ -10,12 +11,15 @@ void BrighetRGBAllFade(uint8_t step, uint8_t level){
       }else{
         ws2811BRG[i] = 0x00;
       }
+      z += ws2811BRG[i];
     }
+    if(0x00 == z) BRG_POWER_OFF;
   }
   Ws2811BRGUpdate();
 }
 
-void RGBLeftToRighet(void){
+void BRGLeftToRighet(void){
+  BRG_POWER_ON;
   if(0x00 < brg.wait){
     brg.pause++;
     if(0x20 < brg.pause){
@@ -34,10 +38,11 @@ void RGBLeftToRighet(void){
       brg.wait = 0x01;
     }
   }
-  BrighetRGBAllFade(0x08, 0x00);
+  BRGBrighetAllFade(0x08, 0x00);
 }
 
-void RGBRighetToLeft(void){
+void BRGRighetToLeft(void){
+  BRG_POWER_ON;
   if(0x00 < brg.wait){
     brg.pause++;
     if(0x20 < brg.pause){
@@ -57,10 +62,11 @@ void RGBRighetToLeft(void){
       brg.wait = 0x01;
     }
   }
-  BrighetRGBAllFade(0x08, 0x00);
+  BRGBrighetAllFade(0x08, 0x00);
 }
 
-void RGBRighetLeftToCenter(void){
+void BRGRighetLeftToCenter(void){
+  BRG_POWER_ON;
   uint16_t y = brg.set * 0x03;
   uint16_t x = LEDS_BRG * 0x03 - 0x03;
   if(0x00 < brg.wait){
@@ -83,10 +89,11 @@ void RGBRighetLeftToCenter(void){
       brg.wait = 0x01;
     }
   }
-  BrighetRGBAllFade(0x08, 0x00);
+  BRGBrighetAllFade(0x08, 0x00);
 }
 
-void RGBCenterToRighetLeft(void){
+void BRGCenterToRighetLeft(void){
+  BRG_POWER_ON;
   if(0x00 < brg.wait){
     brg.pause++;
     if(0xA0 < brg.pause){
@@ -115,38 +122,32 @@ void RGBCenterToRighetLeft(void){
 }
 
 
-void TIM7_IRQHandler(void){
-  TIM7->SR &= ~TIM_SR_UIF;
+void UpdateBrightnessW(void){
   uint8_t i;
+  uint8_t z = 0x00;
   for(i = 0x00; i < LEDS_W; i++){
     if(BKP->DR1 & (0x01 << i)){
       if(ws2811W[i] < settings.brightnessW[i]) ws2811W[i]++;
+      W_POWER_ON;
     }else{
-      if(ws2811W[i] > settings.brightnessW[i]) ws2811W[i]--;
+      if(ws2811W[i] > settings.brightnessW[i]){
+        ws2811W[i]--;
+        z += ws2811W[i];
+      }
     }
   }
+  Ws2811WUpdate();
+  if(0x00 == z) W_POWER_OFF;
   switch(brg.effect){
-    case 0x01: RGBLeftToRighet();
+    case 0x01: BRGLeftToRighet();
     break;
-    case 0x02: RGBRighetToLeft();
+    case 0x02: BRGRighetToLeft();
     break;
-    case 0x03: RGBRighetLeftToCenter();
+    case 0x03: BRGRighetLeftToCenter();
     break;
-    case 0x04: RGBCenterToRighetLeft();
+    case 0x04: BRGCenterToRighetLeft();
     break;
-    case 0x00: default: BrighetRGBAllFade(0x01, 0x00);
+    case 0x00: default: BRGBrighetAllFade(0x01, 0x00);
     break;
   }
 }
-
-void BrighetInit(void){
-  RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
-  TIM7->PSC = 0x1F3F; // 7999 80000000:8000=10000Hz
-  TIM7->ARR = 0xC7; // 50Hz
-  TIM7->SR = 0x00;
-  TIM7->DIER |= TIM_DIER_UIE;
-  TIM7->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
-  
-  NVIC_SetPriority(TIM7_IRQn, PRIORITY_BRIGHET);
-  NVIC_EnableIRQ(TIM7_IRQn);
- }

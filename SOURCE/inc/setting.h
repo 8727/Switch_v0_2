@@ -93,7 +93,7 @@
 #define PRIORITY_DHT22_DMA      0x0F
 #define PRIORITY_ADC            0x0E
 #define PRIORITY_RTC            0x0C
-#define PRIORITY_XPT2046        0x0D
+#define PRIORITY_XPT2046_LIGHT  0x0D
 #define PRIORITY_BRIGHET        0x0A
 #define PRIORITY_RS485          0x01
 #define PRIORITY_DS18B20        0x00

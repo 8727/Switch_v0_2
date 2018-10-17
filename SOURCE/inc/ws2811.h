@@ -10,11 +10,9 @@
 #define LED_HIGHT        0x40
 
 extern uint8_t ws2811W[];
-extern uint8_t ws2811P[];
 extern uint8_t ws2811BRG[];
 
 void Ws2811WUpdate(void);
-void Ws2811PUpdate(void);
 void Ws2811BRGUpdate(void);
 void Ws2811Init(void);
 

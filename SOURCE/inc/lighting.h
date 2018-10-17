@@ -8,16 +8,20 @@
 
 
 /* Define --------------------------------------------------------------------*/
+#define W_POWER_ON        GPIOA->BSRR = GPIO_BSRR_BR0
+#define W_POWER_OFF       GPIOA->BSRR = GPIO_BSRR_BS0
 
-struct RGBInitTypeDef{
+#define BRG_POWER_ON      GPIOA->BSRR = GPIO_BSRR_BR1
+#define BRG_POWER_OFF     GPIOA->BSRR = GPIO_BSRR_BS1
+
+struct BRGInitTypeDef{
   uint8_t effect;
   uint8_t wait;
   uint8_t pause;
   uint8_t set;
-  
 };
-extern struct RGBInitTypeDef brg;
+extern struct BRGInitTypeDef brg;
 
-void BrighetInit(void);
+void UpdateBrightnessW(void);
 
 #endif /* _LIGHTING_H */
