@@ -137,7 +137,6 @@ void Setting(void){
   GuiInit();
   Xpt2046Init();
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)){
-    TIM2->CCR1 = 0xFF;
     Xpt2046Calibration();
   }else{
     TIM2->CCR1 = 0x2F;

@@ -12,16 +12,24 @@
 #define XPT2046_CS_LOW      GPIOB->BSRR = GPIO_BSRR_BR12
 #define XPT2046_CS_HIGHT    GPIOB->BSRR = GPIO_BSRR_BS12
 
-#define XPT2046_Y           0x90
-#define XPT2046_X           0xD0
-#define XPT2046_BAT         0xA4
-#define XPT2046_BRG         0xE4
+#define XPT2046_A           0x0090
+#define XPT2046_B           0x00D0
+#define XPT2046_BAT         0x00A4
+#define XPT2046_BRG         0x00E4
 
-#define XPT2046_PRESSED     0x00
-#define XPT2046_RELEASED    0x01
+#define XPT2046_PRESSED     0x0000
+#define XPT2046_RELEASED    0x0001
+
+static const uint16_t xpt2046Send[0x05] = {XPT2046_BAT, XPT2046_BRG, XPT2046_B, XPT2046_A, XPT2046_PRESSED};
+
+struct xpt2046ReadInitTypeDef{
+  uint8_t status;
+  uint8_t count;
+  uint8_t rawCount;
+  uint16_t raw[0x05];
+};
 
 struct xpt2046InitTypeDef{
-  uint8_t pressed;
   int16_t x;
   int16_t y;
   uint16_t bat;
