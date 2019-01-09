@@ -3,18 +3,23 @@
 struct xpt2046InitTypeDef xpt2046;
 
 uint16_t Xpt2046Read(uint8_t addr){
-  uint16_t data = 0x00;
+  uint16_t data;
   XPT2046_CS_LOW;
+  while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = addr;
   while(!(SPI2->SR & SPI_SR_RXNE));
+  (void) SPI2->DR;
+  while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = 0x00;
   while(!(SPI2->SR & SPI_SR_RXNE));
-  data = SPI1->DR;
+  data = SPI2->DR;
   data <<= 0x08;
+  while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = 0x00;
   while(!(SPI2->SR & SPI_SR_RXNE));
-  data |= SPI1->DR;
+  data |= SPI2->DR;
   data >>= 0x03;
+  data &= 0x0FFF;
   XPT2046_CS_HIGHT;
   return data;
 }
@@ -22,14 +27,15 @@ uint16_t Xpt2046Read(uint8_t addr){
 void TIM6_IRQHandler(void){
   TIM6->SR &= ~TIM_SR_UIF;
   
-  xpt2046.bat = Xpt2046Read(XPT2046_BAT);
+  
   xpt2046.brg = Xpt2046Read(XPT2046_BRG);
+  xpt2046.bat = Xpt2046Read(XPT2046_BAT);
   if(GPIOB->IDR & GPIO_IDR_IDR11){
+    xpt2046.pressed = XPT2046_RELEASED;
+  }else{
     xpt2046.x = Xpt2046Read(XPT2046_X);
     xpt2046.y = Xpt2046Read(XPT2046_Y);
     xpt2046.pressed = XPT2046_PRESSED;
-  }else{
-    xpt2046.pressed = XPT2046_RELEASED;
   }
   UpdateBrightnessW();
 }
@@ -95,8 +101,8 @@ void Xpt2046Init(void){
   
   RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
   TIM6->PSC = 0x1F3F; // 7999 80000000:8000=10000Hz
-//  TIM6->ARR = 0xC7; // 50Hz
-  TIM6->ARR = 0x63; // 100Hz
+  TIM6->ARR = 0xC7; // 50Hz
+//  TIM6->ARR = 0x63; // 100Hz
   TIM6->SR = 0x00;
   TIM6->DIER |= TIM_DIER_UIE;
   TIM6->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;
