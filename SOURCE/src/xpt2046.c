@@ -51,9 +51,9 @@ void Xpt2046Calibration(void){
   drawX[0x03] = x;
   drawY[0x03] = y * 0x07;
   
-  TIM2->CCR1 = 0xFF;
   GuiFullWindow(WHITE);
-  DelayMs(60);
+  TIM2->CCR1 = 0xFF;
+//  DelayMs(60);
   while(!xpt2046.pressed){}
   for(i = 0x00; i < 0x04; i++){
     GuiCalibDraw(drawX[i], drawY[i]);

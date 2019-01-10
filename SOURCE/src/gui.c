@@ -73,26 +73,26 @@ void GuiEraseBlocks(uint8_t block){
 }
 
 void GuiBr(void){
-  uint8_t c;
-  uint8_t br = 249;
-  for(uint8_t x = 0x00; x < 0x32; x++){
-    GuiSetWindow(0x0F + x * 0x09, 0x04, 0x08, 0x10);
-    for(uint8_t i = 0x00; i < 0x10; i++){
-      if((x * 5.1) < br){
-        c = brOn[i];
-      }else{
-        c = brOff[i];
-      }
-      for(uint8_t z = 0x00; z < 0x08; z++){
-        if(c & 0x80){
-          LCD_DATA = BLACK;
-        }else{
-          LCD_DATA = WHITE;
-        }
-        c <<= 0x01;
-      }
-    }
-  }
+//  uint8_t c;
+//  uint8_t br = 249;
+//  for(uint8_t x = 0x00; x < 0x32; x++){
+//    GuiSetWindow(0x0F + x * 0x09, 0x04, 0x08, 0x10);
+//    for(uint8_t i = 0x00; i < 0x10; i++){
+//      if((x * 5.1) < br){
+//        c = brOn[i];
+//      }else{
+//        c = brOff[i];
+//      }
+//      for(uint8_t z = 0x00; z < 0x08; z++){
+//        if(c & 0x80){
+//          LCD_DATA = BLACK;
+//        }else{
+//          LCD_DATA = WHITE;
+//        }
+//        c <<= 0x01;
+//      }
+//    }
+//  }
 }
 
 
