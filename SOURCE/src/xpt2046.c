@@ -3,39 +3,35 @@
 struct xpt2046InitTypeDef xpt2046;
 
 uint16_t Xpt2046Read(uint8_t addr){
+  XPT2046_CS_LOW;
   uint16_t data = 0x00;
-  DelayMs(0x01);
-  while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = addr;
   while(!(SPI2->SR & SPI_SR_RXNE));
-  data = SPI1->DR;
-  DelayMs(0x01);
-  while(!(SPI2->SR & SPI_SR_TXE));
+  data = SPI2->DR;
   SPI2->DR = 0x00;
   while(!(SPI2->SR & SPI_SR_RXNE));
   data = SPI2->DR;
   data <<= 0x08;
-  DelayMs(0x01);
-  while(!(SPI2->SR & SPI_SR_TXE));
   SPI2->DR = 0x00;
   while(!(SPI2->SR & SPI_SR_RXNE));
   data |= SPI2->DR;
   data >>= 0x03;
   data &= 0x0FFF;
+  XPT2046_CS_HIGHT;
   return data;
 }
 
 void TIM6_IRQHandler(void){
   TIM6->SR &= ~TIM_SR_UIF;
   
-//  xpt2046.bat = Xpt2046Read(XPT2046_BAT);
-//  xpt2046.brg = Xpt2046Read(XPT2046_BRG);
-  if(GPIOB->IDR & GPIO_IDR_IDR11){
-    XPT2046_CS_LOW;
+  xpt2046.bat = Xpt2046Read(XPT2046_BAT);
+  xpt2046.brg = Xpt2046Read(XPT2046_BRG);
+  if(!(GPIOB->IDR & GPIO_IDR_IDR11)){
     xpt2046.x = Xpt2046Read(XPT2046_X);
     xpt2046.y = Xpt2046Read(XPT2046_Y);
-    XPT2046_CS_HIGHT;
     xpt2046.pressed = XPT2046_PRESSED;
+  }else{
+    xpt2046.pressed = XPT2046_RELEASED;
   }
   UpdateBrightnessW();
 }
@@ -89,7 +85,7 @@ void Xpt2046Init(void){
   XPT2046_CS_HIGHT;
 
   RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
-  SPI2->CR1 |= SPI_CR1_BR_2 | SPI_CR1_BR_0; // 64
+  SPI2->CR1 |= SPI_CR1_BR_2;
   SPI2->CR1 &= ~SPI_CR1_CPOL;
   SPI2->CR1 &= ~SPI_CR1_CPHA;
   SPI2->CR1 &= ~SPI_CR1_DFF;
@@ -98,8 +94,6 @@ void Xpt2046Init(void){
   SPI2->CR1 |= SPI_CR1_SSM | SPI_CR1_SSI;
   SPI2->CR1 |= SPI_CR1_MSTR;
   SPI2->CR1 |= SPI_CR1_SPE;
-  
-  Xpt2046Read(0x80);
   
   RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
   TIM6->PSC = 0x1F3F; // 7999 80000000:8000=10000Hz
