@@ -22,8 +22,8 @@
 
 struct xpt2046InitTypeDef{
   uint8_t pressed;
-  int16_t x;
-  int16_t y;
+  uint16_t x;
+  uint16_t y;
   uint16_t bat;
   uint16_t brg;
 };

@@ -24,7 +24,7 @@ uint16_t Xpt2046Read(uint8_t addr){
 void TIM6_IRQHandler(void){
   TIM6->SR &= ~TIM_SR_UIF;
   
-  xpt2046.bat = Xpt2046Read(XPT2046_BAT);
+  xpt2046.bat = (0.37666 * Xpt2046Read(XPT2046_BAT)) - 17;
   xpt2046.brg = Xpt2046Read(XPT2046_BRG);
   if(!(GPIOB->IDR & GPIO_IDR_IDR11)){
     xpt2046.x = Xpt2046Read(XPT2046_X);
