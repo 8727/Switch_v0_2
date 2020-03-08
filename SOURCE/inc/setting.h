@@ -30,7 +30,9 @@
 #define LEDS_BRG_R              0xFF
 #define LEDS_BRG_G              0xFF
 
-
+#define TIMER_ON_OFF            0x80
+#define TIMER_LIGHT_FLOOR       0x40
+#define TIMER_SWITCH            0x20
 
 
 

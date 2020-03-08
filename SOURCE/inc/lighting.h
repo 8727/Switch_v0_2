@@ -24,4 +24,7 @@ extern struct BRGInitTypeDef brg;
 
 void UpdateBrightnessW(void);
 
+void StartLighting(uint8_t value);
+void StopLighting(void);
+
 #endif /* _LIGHTING_H */

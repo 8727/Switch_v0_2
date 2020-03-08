@@ -51,16 +51,14 @@ void ReadSettingTimers(void){
   uint8_t tempBuff[0x80];
   uint8_t step = 0x00;
   Ee24cxxRead(0x80, tempBuff, 0x7F);
-  for(uint8_t i = 0x00; i < 0x10; i++){
-    timesJob[i].jobActivity = tempBuff[step];
-    timesJob[i].typeChannel = tempBuff[step + 0x01];
-    timesJob[i].value = tempBuff[step + 0x02];
-    timesJob[i].wday = tempBuff[step + 0x03];
-    timesJob[i].hourOn = tempBuff[step + 0x04];
-    timesJob[i].minOn = tempBuff[step + 0x05];
-    timesJob[i].hourOff = tempBuff[step + 0x06];
-    timesJob[i].minOff = tempBuff[step + 0x07];
-    step += 0x08;
+  for(uint8_t i = 0x00; i < 0x20; i++){
+    timesJob[i].settings = tempBuff[step];
+    timesJob[i].value = tempBuff[step + 0x01];
+    timesJob[i].wday = tempBuff[step + 0x02] & 0xF0;
+    uint16_t time = ((tempBuff[step + 0x02] <<0x08) + tempBuff[step + 0x03]) & 0x0FFF;
+    timesJob[i].hour = time / 60;
+    timesJob[i].min = time % 60;
+    step += 0x04;
   }
 }
 void ReadConfig(void){

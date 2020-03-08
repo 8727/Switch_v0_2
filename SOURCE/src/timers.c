@@ -2,25 +2,28 @@
 
 TimerTypeDef unixTims;
 
-struct TimersTypeDef timesJob[0x10];
-
-void TimersLighting(uint8_t number){
-  
-}
-
-void TimersWarmFloor(uint8_t number){
-  
-}
+struct TimersTypeDef timesJob[0x20];
 
 void TimersMatch(void){
   UpdateTimer(&unixTims);
-  for(uint8_t i = 0x00; i < 0x10; i++){
-    if(timesJob[i].jobActivity & 0x01){
-      if(unixTims.wday == timesJob[i].wday && unixTims.hour == timesJob[i].hourOn && unixTims.min == timesJob[i].minOn){
-        timesJob[i].jobActivity |= 0x10;
-      }
-      if(unixTims.wday == timesJob[i].wday && unixTims.hour == timesJob[i].hourOff && unixTims.min == timesJob[i].minOff){
-        timesJob[i].jobActivity &= 0x0F;
+  for(uint8_t i = 0x00; i < 0x020; i++){
+    if(timesJob[i].settings & TIMER_ON_OFF){
+      if(unixTims.wday == timesJob[i].wday && unixTims.hour == timesJob[i].hour && unixTims.min == timesJob[i].min && unixTims.sec == 0x00){
+        if(timesJob[i].settings & TIMER_LIGHT_FLOOR){
+          if(timesJob[i].settings & TIMER_SWITCH){
+            StartLighting(timesJob[i].value);
+          }else{
+            StopLighting();
+          }
+        }else{
+          if(timesJob[i].settings & TIMER_SWITCH){
+            flor = 0x80;
+            florTemperature = timesJob[i].value;
+          }else{
+            flor = 0x00;
+//            uint8_t florTemperature = timesJob[i].value;
+          }
+        }
       }
     }
   }

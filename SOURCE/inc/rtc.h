@@ -24,6 +24,7 @@ typedef struct{
   uint8_t  wday;    /* 0..6 (Sun..Sat) */
   uint8_t  hour;    /* 0..23 */
   uint8_t  min;     /* 0..59 */
+  uint8_t  sec;     /* 0..59 */
 }TimerTypeDef;
 
 void UpdateTimer(TimerTypeDef* unixTim);

@@ -482,6 +482,11 @@
               <FileType>1</FileType>
               <FilePath>..\SOURCE\src\lighting.c</FilePath>
             </File>
+            <File>
+              <FileName>floor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOURCE\src\floor.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

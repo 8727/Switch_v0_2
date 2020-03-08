@@ -151,3 +151,11 @@ void UpdateBrightnessW(void){
     break;
   }
 }
+
+void StartLighting(void){
+  
+}
+
+void StopLighting(void){
+  
+}
